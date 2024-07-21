@@ -1,13 +1,13 @@
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
 const NodeCache = require( "node-cache" );
-const Queue = require("../managers/Queue.js");
+const Queue = require("../System/Queue.js");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
-const log = require('../misc/log')
-const verifyCaptchaResponse = require('../misc/verifyCaptchaResponse')
+const log = require('../System/log')
+const verifyCaptchaResponse = require('../System/verifyCaptchaResponse')
 
 module.exports.load = async function (app, db) {
   app.get("/api", async (req, res) => {
@@ -108,8 +108,7 @@ module.exports.load = async function (app, db) {
     if(await db.get(`coins-${req.session.userinfo.id}`) == null) {
       await db.set(`coins-${req.session.userinfo.id}`, 0)
     } else {
-      let e = await db.get(`coins-${req.session.userinfo.id}`)
-      e = e + newsettings.api.arcio["afk page"].coins
+      e = await db.get(`coins-${req.session.userinfo.id}`)
       await db.set(`coins-${req.session.userinfo.id}`, e)
     }
     let a = await db.get(`coins-${req.session.userinfo.id}`)
@@ -421,7 +420,7 @@ app.post("/api/createcoupon", async (req, res) => {
     }
     let theme = indexjs.get(req);
     ejs.renderFile(
-      `./themes/${theme.name}/${theme.settings.notfound}`,
+      `./Themes/${theme.name}/${theme.settings.notfound}`,
       await eval(indexjs.renderdataeval),
       null,
       function (err, str) {

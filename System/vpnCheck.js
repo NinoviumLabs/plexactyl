@@ -16,7 +16,7 @@ module.exports = (key, db, ip, res) => {
             if (ipcache === "yes") {
                 resolve(true)
                 renderFile(
-                    `./themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
+                    `./Themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
                     {
                         settings: newsettings,
                         db,
@@ -24,7 +24,7 @@ module.exports = (key, db, ip, res) => {
                     },
                     null,
                     (err, str) => {
-                        if (err) return renderFile(`./themes/default/alerts/vpn.ejs`);
+                        if (err) return renderFile(`./Themes/default/alerts/vpn.ejs`);
                     }
                 )
                 return 

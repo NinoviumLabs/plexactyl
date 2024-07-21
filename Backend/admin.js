@@ -6,10 +6,10 @@ if (settings.pterodactyl) if (settings.pterodactyl.domain) {
 
 const fetch = require('node-fetch');
 const fs = require("fs");
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const ejs = require("ejs");
-const log = require('../misc/log')
+const log = require('../System/log.js')
 
 module.exports.load = async function(app, db) {
     app.get("/setcoins", async (req, res) => {
@@ -497,7 +497,7 @@ module.exports.load = async function(app, db) {
 
     async function four0four(req, res, theme) {
         ejs.renderFile(
-            `./themes/${theme.name}/${theme.settings.notfound}`, 
+            `./Themes/${theme.name}/${theme.settings.notfound}`, 
             await eval(indexjs.renderdataeval),
             null,
         function (err, str) {

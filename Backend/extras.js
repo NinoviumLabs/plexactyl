@@ -1,7 +1,7 @@
 const settings = require("../settings.json");
 const fs = require('fs');
 
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const fetch = require('node-fetch');
 
 module.exports.load = async function(app, db) {

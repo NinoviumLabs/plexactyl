@@ -1,6 +1,6 @@
 const settings = require("../settings.json");
 const { CronJob } = require('cron')
-const getAllServers = require('../misc/getAllServers')
+const getAllServers = require('../System/getAllServers')
 const fetch = require('node-fetch')
 
 module.exports.load = async function (app, db) {

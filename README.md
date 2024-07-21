@@ -1,10 +1,6 @@
-
-![Heliactyl](https://cdn.discordapp.com/attachments/881207010417315861/949706607497977976/heliactyl.png)
-
 <hr>
 
-# Heliactyl • The modern client panel for Pterodactyl
-We're back on GitHub, new Heliactyl versions are releasing soon.
+# Plexactyl
 
 All features:
 - Resource Management (Use it to create servers, etc)
@@ -20,56 +16,61 @@ All features:
 - Admin (set/add/remove coins & resources, create/revoke coupons)
 - API (for bots & other things)
 
-# Warning
-
-We cannot force you to keep the "Powered by Heliactyl" in the footer, but please consider keeping it. It helps getting more visibility to the project and so getting better. We won't do technical support for installations without the notice in the footer. We may DMCA the website in certain conditions.
-Please do keep the footer though.
-
-# Discord Server
-
-[Click here to join](https://discord.gg/CSbcjeZgKM)
-
 <hr>
 
 # Install Guide
 
-Warning: You need Pterodactyl already set up on a domain for Heliactyl to work
-1. Upload the file above onto a Pterodactyl NodeJS server [Download the egg from Parkervcp's GitHub Repository](https://github.com/parkervcp/eggs/tree/master/bots/discord/discord.js)
-2. Unarchive the file and set the server to use NodeJS 16
-3. Configure settings.json (specifically panel domain/apikey and discord auth settings for it to work)
-4. Start the server (Ignore the 2 strange errors that might come up)
-5. Login to your DNS manager, point the domain you want your dashboard to be hosted on to your VPS IP address. (Example: dashboard.domain.com 192.168.0.1)
-6. Run `apt install nginx && apt install certbot` on the vps
-7. Run `ufw allow 80` and `ufw allow 443` on the vps
-8. Run `certbot certonly -d <Your Heliactyl Domain>` then do 1 and put your email
-9. Run `nano /etc/nginx/sites-enabled/heliactyl.conf`
-10. Paste the configuration at the bottom of this and replace with the IP of the pterodactyl server including the port and with the domain you want your dashboard to be hosted on.
-11. Run `systemctl restart nginx` and try open your domain.
+**Caution:** Ensure that Pterodactyl is already configured on a domain or else Plexactyl may not function properly.
+
+Access your VPS through SSH and run these Commands:
+
+```bash
+1. sudo apt update -y && sudo apt upgrade -y
+2. sudo apt install nginx
+3. cd /var/www
+4. # Download and unzip the latest Plexactyl release from GitHub into the current folder
+5. curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   # Customize the settings.json file, specifically updating the panel domain, API key, and Discord authentication settings.
+6. node . # Start Plexactyl. Take a look at "Running in background and on startup" if you want Plexactyl to run in the background
+          # Ctrl + C to stop Plexactyl
+7. sudo apt install certbot
+8. sudo ufw allow 80
+9. sudo ufw allow 443
+10. sudo certbot certonly -d <Your Plexactyl Domain>
+11. nano /etc/nginx/sites-enabled/plexactyl.conf
+12. # Copy the Ngnix config from # Nginx Proxy Config and replace <domain> with your domain and <port> with the Port Plexactyl is running on 
+    # (You can find the port in the settings.json)
+13. sudo systemctl restart nginx
+14. # Attempt to access your Plexactyl domain
+
 
 # Nginx Proxy Config
-```Nginx
 server {
     listen 80;
     server_name <domain>;
     return 301 https://$server_name$request_uri;
 }
+
 server {
     listen 443 ssl http2;
-location /afkwspath {
-  proxy_http_version 1.1;
-  proxy_set_header Upgrade $http_upgrade;
-  proxy_set_header Connection "upgrade";
-  proxy_pass "http://localhost:<port>/afkwspath";
-}
+
+    location /afkwspath {
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_pass "http://localhost:<port>/afkwspath";
+    }
     
     server_name <domain>;
-ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
+    ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/<domain>/privkey.pem;
     ssl_session_cache shared:SSL:10m;
     ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
-location / {
+
+    location / {
       proxy_pass http://localhost:<port>/;
       proxy_buffering off;
       proxy_set_header X-Real-IP $remote_addr;
@@ -81,30 +82,51 @@ location / {
 
 # Additional Configuration
 
-Enabling other eggs (Minecraft Bedrock):
-1. [Download the eggs from Parkervcp's GitHub Repository](https://github.com/parkervcp/eggs/tree/master/bots/discord/discord.js)
+#### **Changing the EGG IDs**:
+ Pterodactyl often changes the IDs of the EGGs so you might need to change the IDs in the settings.json to match the Pterodactyl ones
+ You can find the eggs for Minecraft by using `YourPanelDomain.net/admin/nests/view/1`. Replace YourPanelDomain.net with the actual Domain of your Pterodactyl Installation
+
+How to other eggs (Minecraft Pocketmine & Vanilla Bedrock):
+1. [Download them from Minecraft eggs repository](https://github.com/pelican-eggs/minecraft)
 2. Add the Pocketmine & Vanilla Bedrock eggs to your panel
 3. Get the egg ID of both of them and set it as the ID in settings.json
 
 # Updating 
 
-From Heliactyl v11 or Dashactyl v0.4 to Heliactyl v12:
-1. Store certain things such as your api keys, discord auth settings, etc in a .txt file
-2. Download database.sqlite 
-3. Delete all files off the server (or delete and remake the folder if done in ssh)
-4. Upload the latest Heliactyl v12 release and unzip it
+From Heliactyl or Dashactyl v0.4 to Plexactyl:
+1. Store certain information such as your api keys, discord auth settings, etc in a .txt file or somewhere safe
+2. Download database.sqlite (This is the Database which includes important data about the user and servers) 
+3. Delete all files in the directory of the server (or delete and remake the folder if done in ssh)
+4. Upload the latest Plexactyl release and unzip it
 5. Upload database.sqlite and reconfigure settings.json
 
-Move to a newer Heliactyl v12 release:
+Move to a newer Plexactyl release:
 1. Delete everything except settings.json, database.sqlite
-2. Put the files that you didn't delete into a zip file
-3. Upload the latest Heliactyl v12 release and unzip it
-4. Remove settings.json and database.sqlite
-5. Unzip the zip with your old settings.json and database.sqlite
+2. Download the database.sqlite and Store important details from the settings.json such as your api keys, discord auth settings, etc in a .txt file or somewhere safe
+3. Upload the latest Plexactyl release and unzip it
+4. reconfigure settings.json and upload your old database.sqlite
+5. All done now start Plexactyl again
+
+# Running in background and on startup
+Installing [pm2](https://github.com/Unitech/pm2):
+- Run `npm install pm2 -g` on the vps
+
+Starting the Dashboard in Background:
+- Change directory to your Plexactyl folder Using `cd` command, Example: `cd /var/www/plexactyl` 
+- To run Plexactyl, use `pm2 start index.js --name "Plexactyl"`
+- To view logs, run `pm2 logs Plexactyl`
+
+Making the dashboard runs on startup:
+- Make sure your dashboard is running in the background with the help of [pm2](https://github.com/Unitech/pm2)
+- You can check if Plexactyl is running in background with `pm2 list`
+- Once you confirmed that Plexactyl is running in background, you can create a startup script by running `pm2 startup` and `pm2 save`
+- Note: Supported init systems are `systemd`, `upstart`, `launchd`, `rc.d`
+- To stop your Plexactyl from running in the background, use `pm2 unstartup`
+
+To stop a currently running Plexactyl instance, use `pm2 stop Plexactyl`
 
 # Legacy Deprecation Notice
 
-Heliactyl v6, v7, v8, v9, v10, v11 is now deprecated as listed in our Discord and should not be used.
-Please update to Heliactyl v12.
-
+Heliactyl has now reached EOL (End Of Life) and should not be used in Production.
+Please update to Plexactyl or [Fixed Heliactyl](https://github.com/OvernodeProjets/Fixed-Heliactyl)
 

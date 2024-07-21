@@ -1,7 +1,7 @@
 //
-// Heliactyl 12.1, Codename Kyiv
+// Plexactyl 12.2
 // 
-//  * Copyright Sryden UK 2022
+//  * Copyright Zen Software LTD
 //  * Please read the "License" file
 //  * #SupportUkraine
 //
@@ -13,8 +13,8 @@
 const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
+const os = require('os');
 const axios = require("axios");
-const arciotext = require('./stuff/arciotext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -66,17 +66,6 @@ module.exports.renderdataeval =
       extra: theme.settings.variables,
 	  db: db
     };
-    if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
-      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
-        let token = "\${req.session.arcsessiontoken}";
-        let everywhat = \${newsettings.api.arcio["afk page"].every};
-        let gaincoins = \${newsettings.api.arcio["afk page"].coins};
-        let arciopath = "\${newsettings.api.arcio["afk page"].path.replace(/\\\\/g, "\\\\\\\\").replace(/"/g, "\\\\\\"")}";
-
-        \${arciotext}
-      \`);
-    };
-
     return renderdata;
   })();`;
 
@@ -101,7 +90,7 @@ require('express-ws')(app);
 
 const ejs = require("ejs");
 const session = require("express-session");
-const indexjs = require("./index.js");
+const indexjs = require("./app.js");
 
 // Load the website.
 
@@ -119,10 +108,18 @@ app.use(express.json({
 }));
 
 const listener = app.listen(settings.website.port, function() {
-  console.log(chalk.green("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
-  console.log(chalk.green("Heliactyl V12 is now online at port " + listener.address().port + " "));
-  console.log(chalk.green("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"));
-});
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🚀 Welcome to Plexactyl!🚀");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🔧 Server Specifications:");
+  console.log(`   - CPU: ${os.cpus()[0].model} (${os.cpus().length} Cores)`);
+  console.log(`   - RAM: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
+  console.log(`   - Disk: ${Math.round(os.totalmem() / (1024 ** 3))}GB`);
+  console.log(`   - OS: ${os.type()} ${os.release()}`);
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("📝 Sidenote: If you ever encounter a 502 Bad Gateway error,");
+  console.log("   remember it's likely a proxy issue, not Plexactyl itself.");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");});
 
 var cache = false;
 app.use(function(req, res, next) {
@@ -151,10 +148,10 @@ app.use(function(req, res, next) {
 
 // Load the API files.
 
-let apifiles = fs.readdirSync('./api').filter(file => file.endsWith('.js'));
+let apifiles = fs.readdirSync('./Backend').filter(file => file.endsWith('.js'));
 
 apifiles.forEach(file => {
-  let apifile = require(`./api/${file}`);
+  let apifile = require(`./Backend/${file}`);
 	apifile.load(app, db);
 });
 
@@ -162,11 +159,10 @@ app.all("*", async (req, res) => {
   if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");
   let theme = indexjs.get(req);
 let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.random().toString(36).substring(2, 15);
   if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
-      `./themes/${theme.name}/${theme.settings.notfound}`, 
+      `./Themes/${theme.name}/${theme.settings.notfound}`, 
       await eval(indexjs.renderdataeval),
       null,
     async function (err, str) {
@@ -210,7 +206,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       };
 
       ejs.renderFile(
-        `./themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`, 
+        `./Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`, 
         await eval(indexjs.renderdataeval),
         null,
       function (err, str) {
@@ -229,7 +225,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
   };
     const data = await eval(indexjs.renderdataeval)
   ejs.renderFile(
-    `./themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`, 
+    `./Themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`, 
     data,
     null,
   function (err, str) {
@@ -250,15 +246,15 @@ module.exports.get = function(req) {
   let tname = encodeURIComponent(getCookie(req, "theme"));
   let name = (
     tname ?
-      fs.existsSync(`./themes/${tname}`) ?
+      fs.existsSync(`./Themes/${tname}`) ?
         tname
       : defaulttheme
     : defaulttheme
   )
   return {
     settings: (
-      fs.existsSync(`./themes/${name}/pages.json`) ?
-        JSON.parse(fs.readFileSync(`./themes/${name}/pages.json`).toString())
+      fs.existsSync(`./Themes/${name}/pages.json`) ?
+        JSON.parse(fs.readFileSync(`./Themes/${name}/pages.json`).toString())
       : defaultthemesettings
     ),
     name: name

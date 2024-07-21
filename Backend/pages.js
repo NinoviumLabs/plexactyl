@@ -1,9 +1,8 @@
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const ejs = require("ejs");
 const express = require("express");
 const settings = require("../settings.json");
 const fetch = require('node-fetch');
-const arciotext = require('../stuff/arciotext')
 
 module.exports.load = async function(app, db) {
   app.all("/", async (req, res) => {
@@ -12,7 +11,7 @@ module.exports.load = async function(app, db) {
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login");
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
       ejs.renderFile(
-        `./themes/${theme.name}/${theme.settings.notfound}`, 
+        `./Themes/${theme.name}/${theme.settings.notfound}`, 
         await eval(indexjs.renderdataeval),
         null,
       async function (err, str) {
@@ -54,7 +53,7 @@ module.exports.load = async function(app, db) {
         };
   
         ejs.renderFile(
-          `./themes/${theme.name}/${theme.settings.index}`, 
+          `./Themes/${theme.name}/${theme.settings.index}`, 
           await eval(indexjs.renderdataeval),
           null,
         function (err, str) {
@@ -70,7 +69,7 @@ module.exports.load = async function(app, db) {
       return;
     };
     ejs.renderFile(
-      `./themes/${theme.name}/${theme.settings.index}`, 
+      `./Themes/${theme.name}/${theme.settings.index}`, 
       await eval(indexjs.renderdataeval),
       null,
     function (err, str) {
@@ -84,5 +83,5 @@ module.exports.load = async function(app, db) {
     });
   });
 
-  app.use('/assets', express.static('./assets'));
+  app.use('/Public', express.static('./Public'));
 };

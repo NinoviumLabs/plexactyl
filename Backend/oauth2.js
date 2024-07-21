@@ -13,12 +13,12 @@ if (settings.pterodactyl.domain.slice(-1) == "/")
 
 const fetch = require('node-fetch');
 
-const indexjs = require("../index.js");
-const log = require('../misc/log')
+const indexjs = require("../app.js");
+const log = require('../System/log.js')
 
 const fs = require("fs");
 const { renderFile } = require('ejs')
-const vpnCheck = require("../misc/vpnCheck");
+const vpnCheck = require("../System/vpnCheck.js");
 
 module.exports.load = async function (app, db) {
   app.get("/login", async (req, res) => {
@@ -39,10 +39,11 @@ module.exports.load = async function (app, db) {
     res.send(`
     <head>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/whitney" rel="stylesheet">
-    <title>Please wait...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">    <title>Please wait...</title>
     </head>
-    <body style="background-color: #111319; font-family: 'Whitney-Semibold', sans-serif;">
+    <body style="background-color: #111319; font-family: 'DM Sans', sans-serif;">
     <center>
       <br><br><br>
       <h1 style="color: white">You are currently in the login queue, please wait...</h1>
@@ -139,7 +140,7 @@ nanobar.go(100);
           const ipuser = await db.get(`ipuser-${ip}`)
           if (ipuser && ipuser !== userinfo.id) {
             renderFile(
-              `./themes/${newsettings.defaulttheme}/alerts/alt.ejs`,
+              `./Themes/${newsettings.defaulttheme}/alerts/alt.ejs`,
               {
                 settings: newsettings,
                 db,

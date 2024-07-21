@@ -1,11 +1,11 @@
 const settings = require("../settings.json");
 const fetch = require('node-fetch');
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const fs = require("fs");
-const getPteroUser = require('../misc/getPteroUser')
-const Queue = require('../managers/Queue')
-const log = require('../misc/log')
+const getPteroUser = require('../System/getPteroUser')
+const Queue = require('../System/Queue')
+const log = require('../System/log')
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);

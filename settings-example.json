@@ -1,16 +1,16 @@
 {
-  "version": "12.1.1",
+  "version": "12.2.0",
   "defaulttheme": "default",
   "website": {
-    "port": 8000,
-    "secret": "Default Secret (Change this)"
+    "port": 3000,
+    "secret": "Example Secret"
   },
   "pterodactyl": {
-    "domain": "https://example.sryden.cloud",
-    "key": "Example key (You should give the key all permissions)"
+    "domain": "Pterodactyl URL",
+    "key": "Pterodactyl Admin API Key with all permissions"
   },
   "linkvertise": {
-    "userid": 00000,
+    "userid": "00000",
     "coins": 2
   },
   "database": "sqlite://database.sqlite",
@@ -21,7 +21,7 @@
         "code": "Default API Key (Change this)"
       },
       "j4r": {
-        "enabled": true,
+        "enabled": false,
         "ads": [
           {
             "name": "Example server 1",
@@ -64,9 +64,9 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "ID",
-        "secret": "Secret",
-        "link": "http://example.sryden.cloud:8000",
+        "id": "Example OAuth2 ID",
+        "secret": "Example OAuth2 Secret",
+        "link": "https://my.example.com",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {

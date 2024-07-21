@@ -1,15 +1,15 @@
 {
-  "name": "Heliactyl",
+  "name": "Plexactyl",
   "version": "12.0",
   "description": "The best Pterodactyl client area.",
-  "main": "index.js",
-  "author": "Sryden UK",
+  "main": "app.js",
+  "author": "Zen Software LTDD",
   "dependencies": {
     "@keyv/mongo": "^1.2.1",
     "@keyv/mysql": "^1.1.5",
     "@keyv/postgres": "^1.0.17",
     "@keyv/redis": "^2.2.1",
-    "@keyv/sqlite": "^2.0.3",
+    "@keyv/sqlite": "^3.5.2",
     "axios": "^0.25.0",
     "chalk": "^4.1.0",
     "cron": "^1.8.2",
@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "express-ws": "^4.0.0",
+    "gradient-string": "^2.0.2",
     "javascript-obfuscator": "^2.19.1",
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",
@@ -26,6 +27,6 @@
     "warn": "^1.0.1"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon app.js"
   }
 }

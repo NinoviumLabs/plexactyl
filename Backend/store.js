@@ -1,8 +1,8 @@
-const indexjs = require("../index.js");
+const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
-const log = require('../misc/log')
+const log = require('../System/log')
 
 module.exports.load = async function(app, db) {
   let maxram = null;
@@ -270,7 +270,7 @@ module.exports.load = async function(app, db) {
     if (newsettings.api.client.coins.store.enabled == true) return newsettings;
     let theme = indexjs.get(req);
     ejs.renderFile(
-      `./themes/${theme.name}/${theme.settings.notfound}`, 
+      `./Themes/${theme.name}/${theme.settings.notfound}`, 
       await eval(indexjs.renderdataeval),
       null,
     function (err, str) {

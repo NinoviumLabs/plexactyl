@@ -53,21 +53,24 @@
         "settings": "settings.ejs",
         "gift": "gift.ejs",
         "j4r": "j4r.ejs",
-        "afk": "afk.ejs",
+        "afk": "404.ejs",
         "store": "store.ejs",
         "servers": "servers.ejs",
-        "credits": "credits.ejs",
+        "pp": "privacy-policy.ejs",
+        "tos": "terms-of-service.ejs",
         "lv": "lv.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",
         "/servers/new",
         "/servers/edit",
+        "/redeem",
         "/settings",
-        "/j4r",
         "/gift",
+        "/j4r",
+        "/afk",
         "/store",
-        "/coins",
+        "/servers",
         "/lv"
     ],
     "mustbeadmin": [
@@ -78,10 +81,10 @@
         "/admin/coins"
     ],
     "variables": {
-        "faviconlink": "https://cdn.discordapp.com/attachments/881207010417315861/949595064554913812/Copy_of_H_35.png",
+        "faviconlink": "https://avatars.githubusercontent.com/u/176057729?s=200&v=4",
         "home": {
-            "name": "Heliactyl",
-            "icon": "H",
+            "name": "Plexactyl",
+            "icon": "P",
             "admin": "admin",
             "buttontext": {
                 "loggedin": {
