@@ -12,6 +12,7 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "javascript-obfuscator": "^4.0.2",
     "express-ws": "^4.0.0",
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",

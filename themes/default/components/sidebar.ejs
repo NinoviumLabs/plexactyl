@@ -29,21 +29,26 @@
           <span class="menu-title">Resources Store</span>
         </a>
       </li>
-   <!--  <li class="nav-item menu-items">
+      <% if (settings.api.afk.enabled == true) { %>
+    <!-- <li class="nav-item menu-items">
         <a class="nav-link" href="../afk">
           <span class="menu-title">AFK Page</span>
         </a>
       </li> -->
+      <% } %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../lv">
           <span class="menu-title">Linkvertise</span>
         </a>
       </li>
+      <% if (settings.api.client.j4r.enabled == true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../j4r">
           <span class="menu-title">Join for Rewards</span>
         </a>
       </li>
+      <% } %>
+
       <li class="nav-item menu-items">
         <a class="nav-link" href="../gift">
           <span class="menu-title">Gift Coins</span>

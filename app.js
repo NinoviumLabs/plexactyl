@@ -1,9 +1,8 @@
 //
-// Plexactyl 12.2
+// Plexactyl
 // 
 //  * Copyright Zen Software LTD
 //  * Please read the "License" file
-//  * #SupportUkraine
 //
 
 "use strict";
@@ -44,8 +43,8 @@ const defaultthemesettings = {
 
 module.exports.renderdataeval =
   `(async () => {
+   const JavaScriptObfuscator = require('javascript-obfuscator');
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
- 
     let renderdata = {
       req: req,
       settings: newsettings,
