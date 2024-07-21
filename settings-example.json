@@ -305,7 +305,7 @@
     }
   },
   "antivpn": {
-    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antigen.",
+    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Plexactyl will disable antigen.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
     "whitelistedIPs": ["IP address"]

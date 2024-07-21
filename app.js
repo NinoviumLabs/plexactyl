@@ -45,8 +45,6 @@ const defaultthemesettings = {
 module.exports.renderdataeval =
   `(async () => {
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-	const JavaScriptObfuscator = require('javascript-obfuscator');
-
  
     let renderdata = {
       req: req,

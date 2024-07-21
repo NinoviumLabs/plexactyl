@@ -84,7 +84,7 @@ server {
 
 #### **Changing the EGG IDs**:
  Pterodactyl often changes the IDs of the EGGs so you might need to change the IDs in the settings.json to match the Pterodactyl ones
- You can find the eggs for Minecraft by using `YourPanelDomain.net/admin/nests/view/1`. Replace YourPanelDomain.net with the actual Domain of your Pterodactyl Installation
+ You can find the eggs for Minecraft by using `panel.example.com/admin/nests`. Replace panel.example.com with the actual Domain of your Pterodactyl Installation
 
 How to other eggs (Minecraft Pocketmine & Vanilla Bedrock):
 1. [Download them from Minecraft eggs repository](https://github.com/pelican-eggs/minecraft)

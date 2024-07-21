@@ -1,4 +1,5 @@
 node_modules/
-package-lock.json
 database.sqlite
 settings.json
+package-lock.json
+.vscode/
