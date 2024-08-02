@@ -58,11 +58,14 @@
     "/dashboard",
     "/servers/new",
     "/edit",
+    "/profile",
     "/security",
-    "/servers",
+    "/transfer",
+    "/afk",
     "/store",
-    "/coins",
-    "/afk"
+    "/servers",
+    "/accounts",
+    "/settings"
   ],
   "mustbeadmin": [
     "/admin",

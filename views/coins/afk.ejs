@@ -1,15 +1,4 @@
-<head>
-  <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-
+<%- include('../components/head') %>
 <body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
   <%- include('../components/navigation') %>
   <div class="md:pl-48 flex flex-col flex-1 h-screen">

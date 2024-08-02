@@ -1,15 +1,4 @@
-<head>
-  <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-
+<%- include('../components/head') %>
 <body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
   <%
      let ram = 0;
@@ -117,7 +106,7 @@
                 let ram = encodeURIComponent(document.getElementById("ram").value);
                 let disk = encodeURIComponent(document.getElementById("disk").value);
                 let cpu = encodeURIComponent(document.getElementById("cpu").value);
-                let location = encodeURIComponent(document.getElementById("location").value); // in versions of Heliactyl where this is a selection of cards instead of a dropdown, this will need to be changed to a different method of getting the location
+                let location = encodeURIComponent(document.getElementById("location").value); // in versions of Plexactyl where this is a selection of cards instead of a dropdown, this will need to be changed to a different method of getting the location
                 document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}&location=${location}`;
               };
             </script>

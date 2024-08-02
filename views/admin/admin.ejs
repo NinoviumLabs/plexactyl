@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     // Fetch the latest version from the site
-    fetch('https://atqr.pages.dev/heliactyl.json')
+    fetch('https://raw.githubusercontent.com/Plexactyl/version/main/nextgen-ver.json')
       .then(response => response.json())
       .then(data => {
         const currentVersion = '<%= settings.version %>';
@@ -27,11 +27,11 @@
           versionStatusSpan.classList.add('text-gray-600', 'text-xs', 'pt-2');
         } else {
           const link = document.createElement('a');
-          link.href = 'https://github.com/heliactyloss/heliactyl/releases/tag/' + latestVersion;
+          link.href = 'https://github.com/plexactyl/panel/releases/tag/' + latestVersion;
           link.classList.add('text-amber-500', 'transition', 'hover:text-amber-600', 'font-medium');
           link.textContent = 'here';
 
-          const linkText = document.createTextNode(`Heliactyl ${latestVersion} is ready to be updated to. Please click `);
+          const linkText = document.createTextNode(`Plexactyl ${latestVersion} is ready to be updated to. Please click `);
           versionStatusSpan.appendChild(linkText);
           versionStatusSpan.appendChild(link);
           versionStatusSpan.appendChild(document.createTextNode(' to download it'));
@@ -71,7 +71,7 @@
                   </div>
                   <div class="relative ml-4">
                     <h2 class="text-xl font-semibold text-gray-700 sm:truncate tracking-tight">Admin</h2>
-                    <p class="text-xs font-thin text-gray-500">Perform admin actions on the Heliactyl dashboard.</p>
+                    <p class="text-xs font-thin text-gray-500">Perform admin actions on the Plexactyl dashboard.</p>
                   </div>
                 </div>
               </div>
@@ -95,9 +95,9 @@
             <% } %>
             <div class="lg:flex lg:items-center lg:justify-between p-8 border border-gray-200 rounded-3xl">
               <div class="min-w-0 flex-1 ml-4">
-                <h2 class="text-xl font-semibold text-gray-700 sm:truncate tracking-tight">Heliactyl version 14</h2>
+                <h2 class="text-xl font-semibold text-gray-700 sm:truncate tracking-tight">Plexactyl version 14</h2>
                 <p class="text-xs mt-2 font-thin text-gray-500 mb-2">
-                  This dashboard is running Heliactyl version <span class="bg-gray-200 px-2 py-1 mb-2 rounded-full" id="currentVersion"></span>
+                  This dashboard is running Plexactyl version <span class="bg-gray-200 px-2 py-1 mb-2 rounded-full" id="currentVersion"></span>
                 </p>
                 <span id="versionStatus"></span>
               </div>
