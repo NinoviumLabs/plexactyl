@@ -1,21 +1,30 @@
 {
-  "name": "Plexactyl",
-  "version": "12.2.0",
-  "description": "The best Pterodactyl client area.",
+  "name": "plexactyl",
+  "version": "14.14.0",
+  "description": "The official Plexactyl client area for the Pterodactyl Panel.",
   "main": "app.js",
-  "author": "Zen Software LTD",
+  "author": "Zen Software",
   "dependencies": {
+    "@heliactyl/vault": "^1.0.0",
+    "@iarna/toml": "^2.2.5",
     "@keyv/sqlite": "^3.5.2",
-    "axios": "^1.7.2",
+    "@tailwindcss/forms": "^0.5.7",
+    "axios": "^0.28.0",
     "chalk": "^4.1.0",
-    "cron": "^1.8.2",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
+    "chokidar": "^3.6.0",
+    "ejs": "^3.1.7",
+    "express": "^4.18.2",
     "express-session": "^1.17.2",
-    "javascript-obfuscator": "^4.0.2",
     "express-ws": "^4.0.0",
+    "javascript-obfuscator": "^4.0.2",
     "keyv": "^4.0.4",
+    "moment": "^2.30.1",
     "node-cache": "^5.1.2",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.6",
+    "preline": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "build": "npx tailwindcss -i ./assets/tw.conf -o ./assets/tailwind.css --watch"
   }
 }

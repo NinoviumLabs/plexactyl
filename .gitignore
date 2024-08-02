@@ -1,5 +1,5 @@
+config.toml
 node_modules/
-database.sqlite
-settings.json
-package-lock.json
 .vscode/
+package-lock.json
+database.sqlite
