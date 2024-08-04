@@ -30,12 +30,6 @@ module.exports.load = async function (app, db) {
         return res.redirect("/login");
       }
 
-      if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
-        const renderData = await indexjs.renderdataeval(req, theme);
-        res.render(theme.settings.index, renderData);
-        return;
-      }
-
       const renderData = await indexjs.renderdataeval(req, theme);
       res.render(theme.settings.index, renderData);
     } catch (err) {

@@ -14,7 +14,7 @@
     "createserverdisabled": "/servers/new?err=disabled",
     "modifyserverdisabled": "/servers/modify?err=disabled",
     "deleteserverdisabled": "/delete?err=disabled",
-    "regenpassword": "/settings",
+    "regenpassword": "/security",
     "setresources": "/admin",
     "failedsetresources": "/admin",
     "giftresources": "/gift",
@@ -51,8 +51,7 @@
     "store": "coins/store.ejs",
     "servers": "servers/servers.ejs",
     "accounts": "accounts.ejs",
-    "admin": "admin/admin.ejs",
-    "settings": "admin/settings.ejs"
+    "admin": "admin/admin.ejs"
   },
   "mustbeloggedin": [
     "/dashboard",
@@ -64,11 +63,6 @@
     "/afk",
     "/store",
     "/servers",
-    "/accounts",
-    "/settings"
-  ],
-  "mustbeadmin": [
-    "/admin",
-    "/settings"
+    "/accounts"
   ]
 }

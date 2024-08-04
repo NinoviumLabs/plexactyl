@@ -282,11 +282,6 @@ if (cluster.isMaster) {
               ? "?redirect=" + req._parsedUrl.pathname.slice(1)
               : "")
         );
-    if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
-      const renderData = await renderdataeval(req, theme);
-      res.render(theme.settings.notfound, renderData);
-      return;
-    }
     const data = await renderdataeval(req, theme);
     res.render(theme.settings.pages[req._parsedUrl.pathname.slice(1)] || theme.settings.notfound, data);
   });

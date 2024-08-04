@@ -1,6 +1,6 @@
 {
   "name": "plexactyl",
-  "version": "14.14.0",
+  "version": "18.0.0",
   "description": "The official Plexactyl client area for the Pterodactyl Panel.",
   "main": "app.js",
   "author": "Zen Software",
@@ -18,7 +18,6 @@
     "express-ws": "^4.0.0",
     "javascript-obfuscator": "^4.0.2",
     "keyv": "^4.0.4",
-    "moment": "^2.30.1",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "preline": "^2.3.0"

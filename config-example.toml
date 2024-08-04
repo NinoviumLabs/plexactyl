@@ -13,7 +13,7 @@ database = "sqlite://database.sqlite"
 
 # Pterodactyl settings
 [pterodactyl]
-# Disable recaptcha on your panel to not have issues.
+# If you are using cloudflare, whitelist the IP where its hosted and disable reCAPTCHA.
 domain = "https://panel.example.com"
 key = "PTERO_KEY"
 

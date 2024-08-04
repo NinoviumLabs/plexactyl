@@ -23,15 +23,10 @@ if (settings.api.client.oauth2.link.slice(-1) == "/")
     settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 
 /* Ensure platform release target is met */
-const heliactylModule = { "name": "Discord OAuth2 Legacy", "api_level": 2.2, "target_platform": "18.0.0" };
-
-if (heliactylModule.target_platform !== settings.version) {
-  console.log('Module ' + heliactylModule.name + ' does not support this platform release of Heliactyl. The module was built for platform ' + heliactylModule.target_platform + ' but is attempting to run on version ' + settings.version + '.')
-  process.exit()
-}
+const plexactylModule = { "name": "Discord OAuth2 Legacy", "api_level": 2.2, "target_platform": "18.0.0" };
 
 /* Module */
-module.exports.heliactylModule = heliactylModule;
+module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
     app.get("/login", async (req, res) => {
       if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
