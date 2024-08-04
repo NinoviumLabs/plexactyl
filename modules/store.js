@@ -6,13 +6,6 @@ const settings = loadConfig("./config.toml");
 const fs = require("fs");
 const ejs = require("ejs");
 const log = require("../misc/log.js");
-const moment = require('moment');
-
-const REWARD_AMOUNT = 150;
-const DAY_IN_MILLISECONDS = 86400000;
-
-
-/* REPLACE WITH HELIA 14 DONT FORGET!!! */
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Resources Store", "api_level": 3, "target_platform": "18.0.0" };

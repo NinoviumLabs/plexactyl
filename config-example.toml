@@ -1,7 +1,7 @@
-
 # Name and timezone
 name = "Plexactyl"
 timezone = "Europe/London"
+icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
 version = "18.0.0"
@@ -13,7 +13,6 @@ database = "sqlite://database.sqlite"
 
 # Pterodactyl settings
 [pterodactyl]
-# If you are using cloudflare, whitelist the IP where its hosted and disable reCAPTCHA.
 domain = "https://panel.example.com"
 key = "PTERO_KEY"
 
@@ -131,54 +130,31 @@ servers = 8
 
 [api.client.locations.1]
 name = "Falkenstein, DE"
-iso = "DE"
 pro = false
 
-[api.client.eggs.paper]
+# Use my optimized docker images! ghcr.io/zenllc/java:21 for java 21 or ghcr.io/zenllc/java:17 for java 17!
+
+[api.client.eggs.purpur]
 display = "Minecraft - Purpur"
 
-  [api.client.eggs.paper.minimum]
+  [api.client.eggs.purpur.minimum]
   ram = 1_024
   disk = 1_024
   cpu = 100
 
-  [api.client.eggs.paper.maximum]
+  [api.client.eggs.purpur.maximum]
 
-  [api.client.eggs.paper.info]
+  [api.client.eggs.purpur.info]
   egg = 5
-  docker_image = "ghcr.io/paladinsrv/yolks:java_21j9"
+  docker_image = "ghcr.io/zenllc/java:21"
   startup = "java -Xms256M -Xmx{{SERVER_MEMORY}}M {{JAVA_ARGUMENTS}} -jar {{SERVER_JARFILE}} --nogui"
 
-    [api.client.eggs.paper.info.environment]
+    [api.client.eggs.purpur.info.environment]
     SERVER_JARFILE = "server.jar"
     BUILD_NUMBER = "latest"
     JAVA_ARGUMENTS = "--add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs/ -Daikars.new.flags=true -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 --add-modules=jdk.incubator.vector"
 
-    [api.client.eggs.paper.info.feature_limits]
-    databases = 4
-    backups = 4
-
-[api.client.eggs.curseforge]
-display = "Minecraft - CurseForge"
-
-  [api.client.eggs.curseforge.minimum]
-  ram = 512
-  disk = 512
-  cpu = 75
-
-  [api.client.eggs.curseforge.maximum]
-
-  [api.client.eggs.curseforge.info]
-  egg = 3
-  docker_image = "ghcr.io/pterodactyl/yolks:java_17"
-  startup = 'java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true $( [[  ! -f unix_args.txt ]] && printf %s "-jar {{SERVER_JARFILE}}" || printf %s "@unix_args.txt" )'
-
-    [api.client.eggs.curseforge.info.environment]
-    SERVER_JARFILE = "server.jar"
-    MC_VERSION = "latest"
-    BUILD_TYPE = "recommended"
-
-    [api.client.eggs.curseforge.info.feature_limits]
+    [api.client.eggs.purpur.info.feature_limits]
     databases = 4
     backups = 4
 
@@ -210,6 +186,12 @@ path = "ws"
 every = 60
 coins = 2.5
 enabled = true
+
+[linkvertise]
+_note = "This is the 2nd-generation version of Plexactyl's AFK system. Please report any bugs on the GitHub (github.com/plexactyl/panel). Thank you."
+enabled = true
+coins = 30
+userid = "000000"
 
 [antivpn]
 note = "For this to work, generate an API Key on https://proxycheck.io/. If you do not put a key, Plexactyl will automatically disable anti-VPN."

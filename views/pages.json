@@ -48,6 +48,7 @@
     "security": "general/security.ejs",
     "transfer": "coins/transfer.ejs",
     "afk": "coins/afk.ejs",
+    "lv": "coins/linkvertise.ejs",
     "store": "coins/store.ejs",
     "servers": "servers/servers.ejs",
     "accounts": "accounts.ejs",
@@ -61,6 +62,7 @@
     "/security",
     "/transfer",
     "/afk",
+    "/lv",
     "/store",
     "/servers",
     "/accounts"
