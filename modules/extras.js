@@ -83,7 +83,7 @@ module.exports.load = async function (app, db) {
 
       log(
         "Gifted Coins",
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`
+        `${req.session.userinfo.username} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`
       );
       cb();
       return res.redirect(`/transfer?err=none`);

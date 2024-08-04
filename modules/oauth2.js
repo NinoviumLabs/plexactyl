@@ -377,7 +377,7 @@ module.exports.load = async function (app, db) {
                     username: userinfo.id,
                     email: userinfo.email,
                     first_name: userinfo.username,
-                    last_name: "#" + userinfo.discriminator,
+                    last_name: "Powered by Plexactyl",
                     password: genpassword,
                   }),
                 }
@@ -432,7 +432,7 @@ module.exports.load = async function (app, db) {
               }
               log(
                 "signup",
-                `${userinfo.username}#${userinfo.discriminator} logged in to the dashboard for the first time!`
+                `${userinfo.username} logged in to the dashboard for the first time!`
               );
             } else {
               return res.send("New users cannot signup currently.");

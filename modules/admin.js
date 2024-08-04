@@ -76,7 +76,7 @@ module.exports.load = async function (app, db) {
     let successredirect = theme.settings.redirect.setcoins || "/";
     log(
       `set coins`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the coins of the user with the ID \`${id}\` to \`${coins}\`.`
+      `${req.session.userinfo.username} set the coins of the user with the ID \`${id}\` to \`${coins}\`.`
     );
     res.redirect(successredirect + "?err=none");
   });
@@ -137,7 +137,7 @@ module.exports.load = async function (app, db) {
     let successredirect = theme.settings.redirect.setcoins || "/";
     log(
       `add coins`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} added \`${req.query.coins}\` coins to the user with the ID \`${id}\`'s account.`
+      `${req.session.userinfo.username} added \`${req.query.coins}\` coins to the user with the ID \`${id}\`'s account.`
     );
     res.redirect(successredirect + "?err=none");
   });
@@ -245,7 +245,7 @@ module.exports.load = async function (app, db) {
 
       log(
         `set resources`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the resources of the user with the ID \`${id}\` to:\`\`\`servers: ${serversstring}\nCPU: ${cpustring}%\nMemory: ${ramstring} MB\nDisk: ${diskstring} MB\`\`\``
+        `${req.session.userinfo.username} set the resources of the user with the ID \`${id}\` to:\`\`\`servers: ${serversstring}\nCPU: ${cpustring}%\nMemory: ${ramstring} MB\nDisk: ${diskstring} MB\`\`\``
       );
       return res.redirect(successredirect + "?err=none");
     } else {
@@ -403,7 +403,7 @@ module.exports.load = async function (app, db) {
 
       log(
         `set plan`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the plan of the user with the ID \`${req.query.id}\`.`
+        `${req.session.userinfo.username} removed the plan of the user with the ID \`${req.query.id}\`.`
       );
       return res.redirect(successredirect + "?err=none");
     } else {
@@ -417,7 +417,7 @@ module.exports.load = async function (app, db) {
 
       log(
         `set plan`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the plan of the user with the ID \`${req.query.id}\` to \`${req.query.package}\`.`
+        `${req.session.userinfo.username} set the plan of the user with the ID \`${req.query.id}\` to \`${req.query.package}\`.`
       );
       return res.redirect(successredirect + "?err=none");
     }
@@ -512,7 +512,7 @@ module.exports.load = async function (app, db) {
 
     log(
       `create coupon`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created the coupon code \`${code}\` which gives:\`\`\`coins: ${coins}\nMemory: ${ram} MB\nDisk: ${disk} MB\nCPU: ${cpu}%\nServers: ${servers}\`\`\``
+      `${req.session.userinfo.username} created the coupon code \`${code}\` which gives:\`\`\`coins: ${coins}\nMemory: ${ram} MB\nDisk: ${disk} MB\nCPU: ${cpu}%\nServers: ${servers}\`\`\``
     );
     res.redirect(
       theme.settings.redirect.couponcreationsuccess + "?code=" + code
@@ -563,7 +563,7 @@ module.exports.load = async function (app, db) {
 
     log(
       `revoke coupon`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} revoked the coupon code \`${code}\`.`
+      `${req.session.userinfo.username} revoked the coupon code \`${code}\`.`
     );
     res.redirect(
       theme.settings.redirect.couponrevokesuccess + "?revokedcode=true"
@@ -645,7 +645,7 @@ module.exports.load = async function (app, db) {
 
     log(
       `remove account`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the account with the ID \`${discordid}\`.`
+      `${req.session.userinfo.username} removed the account with the ID \`${discordid}\`.`
     );
     res.redirect(
       theme.settings.redirect.removeaccountsuccess + "?success=REMOVEACCOUNT"
@@ -690,7 +690,7 @@ module.exports.load = async function (app, db) {
     let ip = await db.get("ip-" + req.query.id);
     log(
       `view ip`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} viewed the IP of the account with the ID \`${req.query.id}\`.`
+      `${req.session.userinfo.username} viewed the IP of the account with the ID \`${req.query.id}\`.`
     );
     return res.redirect(successredirect + "?err=NONE&ip=" + ip);
   });

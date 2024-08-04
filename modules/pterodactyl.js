@@ -266,7 +266,7 @@ module.exports.load = async function (app, db) {
 
             log(
               "created server",
-              `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
+              `${req.session.userinfo.username} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
             );
             return res.redirect("/servers?err=CREATED");
           } else {
@@ -468,7 +468,7 @@ module.exports.load = async function (app, db) {
         let text = JSON.parse(await serverinfo.text());
         log(
           `modify server`,
-          `${req.session.userinfo.username}#${req.session.userinfo.discriminator} modified the server called \`${text.attributes.name}\` to have the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
+          `${req.session.userinfo.username} modified the server called \`${text.attributes.name}\` to have the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
         );
         pterorelationshipsserverdata.push(text);
         req.session.pterodactyl.relationships.servers.data =
