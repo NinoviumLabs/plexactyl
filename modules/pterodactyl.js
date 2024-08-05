@@ -3,10 +3,8 @@ const settings = loadConfig("./config.toml");
 const fetch = require("node-fetch");
 const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
-const fs = require("fs");
-const getPteroUser = require("../misc/getPteroUser.js");
-const Queue = require("../managers/Queue.js");
-const log = require("../misc/log.js");
+const getPteroUser = require("../handlers/getPteroUser.js");
+const log = require("../handlers/log.js");
 
 if (settings.pterodactyl)
   if (settings.pterodactyl.domain) {
@@ -42,8 +40,7 @@ module.exports.load = async function (app, db) {
 
     let theme = indexjs.get(req);
 
-    let newsettings = loadConfig("./config.toml");
-    if (newsettings.api.client.allow.server.create == true) {
+    if (settings.api.client.allow.server.create == true) {
         let redirectlink = theme.settings.redirect.failedcreateserver ?? "/"; // fail redirect link
 
         const cacheaccount = await getPteroUser(
@@ -77,10 +74,10 @@ module.exports.load = async function (app, db) {
 
           let packagename = await db.get("package-" + req.session.userinfo.id);
           let package =
-            newsettings.api.client.packages.list[
+            settings.api.client.packages.list[
               packagename
                 ? packagename
-                : newsettings.api.client.packages.default
+                : settings.api.client.packages.default
             ];
 
           let extra = (await db.get("extra-" + req.session.userinfo.id)) || {
@@ -130,7 +127,7 @@ module.exports.load = async function (app, db) {
           let location = req.query.location;
 
           if (
-            Object.entries(newsettings.api.client.locations).filter(
+            Object.entries(settings.api.client.locations).filter(
               (vname) => vname[0] == location
             ).length !== 1
           ) {
@@ -138,14 +135,14 @@ module.exports.load = async function (app, db) {
           }
 
           let requiredpackage = Object.entries(
-            newsettings.api.client.locations
+            settings.api.client.locations
           ).filter((vname) => vname[0] == location)[0][1].package;
           if (requiredpackage)
             if (
               !requiredpackage.includes(
                 packagename
                   ? packagename
-                  : newsettings.api.client.packages.default
+                  : settings.api.client.packages.default
               )
             ) {
               return res.redirect(`../upgrade`);
@@ -153,8 +150,8 @@ module.exports.load = async function (app, db) {
 
           let egg = req.query.egg;
 
-          let egginfo = newsettings.api.client.eggs[egg];
-          if (!newsettings.api.client.eggs[egg]) {
+          let egginfo = settings.api.client.eggs[egg];
+          if (!settings.api.client.eggs[egg]) {
             return res.redirect(`${redirectlink}?err=INVALIDEGG`);
           }
           let ram = parseFloat(req.query.ram);
@@ -289,8 +286,7 @@ module.exports.load = async function (app, db) {
 
     let theme = indexjs.get(req);
 
-    let newsettings = loadConfig("./config.toml");
-    if (newsettings.api.client.allow.server.modify == true) {
+    if (settings.api.client.allow.server.modify == true) {
       if (!req.query.id) return res.send("Missing server id.");
 
       const cacheaccount = await getPteroUser(
@@ -331,12 +327,11 @@ module.exports.load = async function (app, db) {
         : undefined;
 
       if (ram || disk || cpu) {
-        let newsettings = loadConfig("./config.toml");
 
         let packagename = await db.get("package-" + req.session.userinfo.id);
         let package =
-          newsettings.api.client.packages.list[
-            packagename ? packagename : newsettings.api.client.packages.default
+          settings.api.client.packages.list[
+            packagename ? packagename : settings.api.client.packages.default
           ];
 
         let pterorelationshipsserverdata =
@@ -361,9 +356,9 @@ module.exports.load = async function (app, db) {
         let attemptegg = null;
         //let attemptname = null;
 
-        for (let [name, value] of Object.entries(newsettings.api.client.eggs)) {
+        for (let [name, value] of Object.entries(settings.api.client.eggs)) {
           if (value.info.egg == checkexist[0].attributes.egg) {
-            attemptegg = newsettings.api.client.eggs[name];
+            attemptegg = settings.api.client.eggs[name];
             //attemptname = name;
           }
         }
@@ -495,8 +490,7 @@ module.exports.load = async function (app, db) {
 
     let theme = indexjs.get(req);
 
-    let newsettings = loadConfig("./config.toml");
-    if (newsettings.api.client.allow.server.delete == true) {
+    if (settings.api.client.allow.server.delete == true) {
       if (
         req.session.pterodactyl.relationships.servers.data.filter(
           (server) => server.attributes.id == req.query.id

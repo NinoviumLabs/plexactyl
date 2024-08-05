@@ -1,9 +1,7 @@
 const loadConfig = require("../handlers/config.js");
 const settings = loadConfig("./config.toml");
-const fs = require("fs");
 const indexjs = require("../app.js");
 const fetch = require("node-fetch");
-const Queue = require("../managers/Queue.js");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Extra Features", "target_platform": "18.0.x" };
@@ -18,13 +16,11 @@ module.exports.load = async function (app, db) {
   app.get("/cp/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
-    let newsettings = loadConfig("./config.toml");
-
-    if (newsettings.api.client.allow.regen !== true)
+    if (settings.api.client.allow.regen !== true)
       return res.send("You cannot regenerate your password currently.");
 
     let newpassword = makeid(
-      newsettings.api.client.passwordgenerator["length"]
+      settings.api.client.passwordgenerator["length"]
     );
     req.session.password = newpassword;
 
@@ -52,45 +48,6 @@ module.exports.load = async function (app, db) {
     res.redirect("/cp/security");
   });
 
-  /* Create a Queue */
-  const queue = new Queue();
-
-  app.get("/cp/transfercoins", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect(`/`);
-
-    const coins = parseInt(req.query.coins);
-    if (!coins || !req.query.id)
-      return res.redirect(`/cp/transfer?err=MISSINGFIELDS`);
-    if (req.query.id.includes(`${req.session.userinfo.id}`))
-      return res.redirect(`/cp/transfer?err=CANNOTGIFTYOURSELF`);
-
-    if (coins < 1) return res.redirect(`/cp/transfer?err=TOOLOWCOINS`);
-
-    queue.addJob(async (cb) => {
-      const usercoins = await db.get(`coins-${req.session.userinfo.id}`);
-      const othercoins = await db.get(`coins-${req.query.id}`);
-      if (!othercoins) {
-        cb();
-        return res.redirect(`/cp/transfer?err=USERDOESNTEXIST`);
-      }
-      if (usercoins < coins) {
-        cb();
-        return res.redirect(`/cp/transfer?err=CANTAFFORD`);
-      }
-
-      await db.set(`coins-${req.query.id}`, othercoins + coins);
-      await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins);
-
-      log(
-        "Gifted Coins",
-        `${req.session.userinfo.username} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`
-      );
-      cb();
-      return res.redirect(`/cp/transfer?err=none`);
-    });
-  });
-};
-
 function makeid(length) {
   let result = "";
   let characters =
@@ -100,4 +57,4 @@ function makeid(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
-}
+}}

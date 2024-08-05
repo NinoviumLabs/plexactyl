@@ -1,16 +1,10 @@
 "use strict";
 
 // Load packages.
-const path = require("path");
 const fs = require("fs");
-const fetch = require("node-fetch");
 const chalk = require("chalk");
-const axios = require("axios");
-const arciotext = require("./misc/afk.js");
+const arciotext = require("./handlers/afk.js");
 const cluster = require("cluster");
-const os = require("os");
-const ejs = require("ejs");
-const readline = require("readline");
 const chokidar = require('chokidar');
 
 global.Buffer = global.Buffer || require("buffer").Buffer;
@@ -49,28 +43,28 @@ const defaultthemesettings = {
  */
 async function renderdataeval(req, theme) {
   const JavaScriptObfuscator = require('javascript-obfuscator');
-  let newsettings = loadConfig("./config.toml");
+  let settings = loadConfig("./config.toml");
   let renderdata = {
     req: req,
-    settings: newsettings,
+    settings: settings,
     userinfo: req.session.userinfo,
-    packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
+    packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : settings.api.client.packages.default : null,
     extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
       ram: 0,
       disk: 0,
       cpu: 0,
       servers: 0
     }),
-    packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
-    coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
+    packages: req.session.userinfo ? settings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : settings.api.client.packages.default] : null,
+    coins: settings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
     bal: (req.session.userinfo ? (await db.get("bal-" + req.session.userinfo.id) ? await db.get("bal-" + req.session.userinfo.id) : 0) : null),
     pterodactyl: req.session.pterodactyl,
     extra: theme.settings.variables,
     db: db
   };
   renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(`
-    let everywhat = ${newsettings.api.afk.every};
-    let gaincoins = ${newsettings.api.afk.coins};
+    let everywhat = ${settings.api.afk.every};
+    let gaincoins = ${settings.api.afk.coins};
     let wspath = "ws";
 
     ${arciotext}
@@ -115,7 +109,7 @@ if (cluster.isMaster) {
     moduleFiles.forEach(file => {
       const module = require('./modules/' + file);
       if (!module.load || !module.plexactylModule) {
-        modulesTable.push({ File: file, Status: 'No module information', 'API Level': 0, 'Target Platform': 'Unknown' });
+        modulesTable.push({ File: file, Name: 'Unknown', 'Target Platform': 'Unknown' });
         return;
       }
     
@@ -176,6 +170,7 @@ if (cluster.isMaster) {
   const session = require("express-session");
   const SessionStore = require("./handlers/session");
   const indexjs = require("./app.js");
+  let secret = (Math.random() + 1).toString(36).substring(7);
 
   // Load the website.
   module.exports.app = app;
@@ -188,7 +183,7 @@ if (cluster.isMaster) {
   app.use(
     session({
       store: new SessionStore({ uri: settings.database }),
-      secret: settings.website.secret,
+      secret: secret,
       resave: false,
       saveUninitialized: false,
       cookie: { secure: false }, // Set to true if using https
@@ -260,8 +255,8 @@ if (cluster.isMaster) {
       )
         return res.redirect("/cp/login?prompt=none");
     let theme = indexjs.get(req);
-    let newsettings = loadConfig("./config.toml");
-    if (newsettings.api.afk.enabled == true)
+    let settings = loadConfig("./config.toml");
+    if (settings.api.afk.enabled == true)
       req.session.arcsessiontoken = Math.random().toString(36).substring(2, 15);
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname))
       if (!req.session.userinfo || !req.session.pterodactyl)

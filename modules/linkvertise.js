@@ -1,10 +1,5 @@
-
 const loadConfig = require("../handlers/config");
 const settings = loadConfig("./config.toml");
-const indexjs = require("../app.js");
-const ejs = require("ejs");
-const chalk = require("chalk");
-const fs = require("fs");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Linkvertise", "target_platform": "18.0.x" };

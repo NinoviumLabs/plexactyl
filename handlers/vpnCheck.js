@@ -1,8 +1,4 @@
 const fetch = require("node-fetch");
-const ejs = require("ejs");
-const { renderFile } = require("ejs");
-const loadConfig = require("../handlers/config");
-let newsettings = loadConfig("./config.toml");
 
 module.exports = (key, db, ip, res) => {
   return new Promise(async (resolve) => {

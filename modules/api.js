@@ -3,18 +3,11 @@ const loadConfig = require("../handlers/config.js");
 const settings = loadConfig("./config.toml");
 const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
-const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require("node-fetch");
-const NodeCache = require("node-cache");
-const Queue = require("../managers/Queue.js");
-const log = require("../misc/log");
-const arciotext = require("../misc/afk");
-
-const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
-
+const log = require("../handlers/log");
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Plexactyl API 3.0 Beta", "target_platform": "18.0.x" };
+const plexactylModule = { "name": "API", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
@@ -75,26 +68,24 @@ module.exports.load = async function (app, db) {
     if (!(await db.get("users-" + req.query.id)))
       return res.send({ status: "invalid id" });
 
-    let newsettings = loadConfig("./config.toml");
+    if (settings.api.client.oauth2.link.slice(-1) == "/")
+      settings.api.client.oauth2.link =
+        settings.api.client.oauth2.link.slice(0, -1);
 
-    if (newsettings.api.client.oauth2.link.slice(-1) == "/")
-      newsettings.api.client.oauth2.link =
-        newsettings.api.client.oauth2.link.slice(0, -1);
+    if (settings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
+      settings.api.client.oauth2.callbackpath =
+        "/" + settings.api.client.oauth2.callbackpath;
 
-    if (newsettings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
-      newsettings.api.client.oauth2.callbackpath =
-        "/" + newsettings.api.client.oauth2.callbackpath;
-
-    if (newsettings.pterodactyl.domain.slice(-1) == "/")
-      newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(
+    if (settings.pterodactyl.domain.slice(-1) == "/")
+      settings.pterodactyl.domain = settings.pterodactyl.domain.slice(
         0,
         -1
       );
 
     let packagename = await db.get("package-" + req.query.id);
     let package =
-      newsettings.api.client.packages.list[
-        packagename ? packagename : newsettings.api.client.packages.default
+      settings.api.client.packages.list[
+        packagename ? packagename : settings.api.client.packages.default
       ];
     if (!package)
       package = {
@@ -107,7 +98,7 @@ module.exports.load = async function (app, db) {
 
     let pterodactylid = await db.get("users-" + req.query.id);
     let userinforeq = await fetch(
-      newsettings.pterodactyl.domain +
+      settings.pterodactyl.domain +
         "/api/application/users/" +
         pterodactylid +
         "?include=servers",
@@ -115,7 +106,7 @@ module.exports.load = async function (app, db) {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${newsettings.pterodactyl.key}`,
+          Authorization: `Bearer ${settings.pterodactyl.key}`,
         },
       }
     );
@@ -142,7 +133,7 @@ module.exports.load = async function (app, db) {
           },
       userinfo: userinfo,
       coins:
-        newsettings.api.client.coins.enabled == true
+        settings.api.client.coins.enabled == true
           ? (await db.get("coins-" + req.query.id))
             ? await db.get("coins-" + req.query.id)
             : 0
@@ -231,8 +222,8 @@ module.exports.load = async function (app, db) {
       adminjs.suspend(req.body.id);
       return res.send({ status: "success" });
     } else {
-      let newsettings = loadConfig("./config.toml");
-      if (!newsettings.api.client.packages.list[req.body.package])
+      let settings = loadConfig("./config.toml");
+      if (!settings.api.client.packages.list[req.body.package])
         return res.send({ status: "invalid package" });
       await db.set("package-" + req.body.id, req.body.package);
       adminjs.suspend(req.body.id);

@@ -3,9 +3,8 @@ const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const loadConfig = require("../handlers/config");
 const settings = loadConfig("./config.toml");
-const fs = require("fs");
 const ejs = require("ejs");
-const log = require("../misc/log.js");
+const log = require("../handlers/log.js");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Resources Store", "target_platform": "18.0.x" };

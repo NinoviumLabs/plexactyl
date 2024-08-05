@@ -4,10 +4,10 @@ const loadConfig = require("../handlers/config");
 const settings = loadConfig("./config.toml");
 const fetch = require("node-fetch");
 const indexjs = require("../app.js");
-const log = require("../misc/log.js");
+const log = require("../handlers/log.js");
 const fs = require("fs");
 const { renderFile } = require("ejs");
-const vpnCheck = require("../misc/vpnCheck.js");
+const vpnCheck = require("../handlers/vpnCheck.js");
 
 if (settings.api.client.oauth2.link.slice(-1) == "/")
     settings.api.client.oauth2.link = settings.api.client.oauth2.link.slice(
@@ -30,7 +30,6 @@ module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
     app.get("/cp/login", async (req, res) => {
       if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
-      let newsettings = loadConfig("./config.toml");
       res.redirect(
         `https://discord.com/api/oauth2/authorize?client_id=${
           settings.api.client.oauth2.id
@@ -38,10 +37,10 @@ module.exports.load = async function (app, db) {
           settings.api.client.oauth2.link +
             settings.api.client.oauth2.callbackpath
         )}&response_type=code&scope=identify%20email${
-          newsettings.api.client.bot.joinguild.enabled == true
+          settings.api.client.bot.joinguild.enabled == true
             ? "%20guilds.join"
             : ""
-        }${newsettings.api.client.j4r.enabled == true ? "%20guilds" : ""}${
+        }${settings.api.client.j4r.enabled == true ? "%20guilds" : ""}${
           settings.api.client.oauth2.prompt == false
             ? "&prompt=none"
             : req.query.prompt
@@ -101,22 +100,20 @@ module.exports.load = async function (app, db) {
       let customredirect = req.session.redirect;
       delete req.session.redirect;
       if (!req.query.code) return res.send("Missing code.");
-  
-      const newsettings = loadConfig("./config.toml");
-  
+    
       let ip =
-        newsettings.api.client.oauth2.ip["trust x-forwarded-for"] == true
+        settings.api.client.oauth2.ip["trust x-forwarded-for"] == true
           ? req.headers["x-forwarded-for"] || req.connection.remoteAddress
           : req.connection.remoteAddress;
       ip = (ip ? ip : "::1")
         .replace(/::1/g, "::ffff:127.0.0.1")
         .replace(/^.*:/, "");
       if (
-        newsettings.antivpn.status &&
+        settings.antivpn.status &&
         ip !== "127.0.0.1" &&
-        !newsettings.antivpn.whitelistedIPs.includes(ip)
+        !settings.antivpn.whitelistedIPs.includes(ip)
       ) {
-        const vpn = await vpnCheck(newsettings.antivpn.APIKey, db, ip, res);
+        const vpn = await vpnCheck(settings.antivpn.APIKey, db, ip, res);
         if (vpn) return;
       }
   
@@ -144,10 +141,10 @@ module.exports.load = async function (app, db) {
         if (scopes.replace(/identify/g, "") == scopes)
           missingscopes.push("identify");
         if (scopes.replace(/email/g, "") == scopes) missingscopes.push("email");
-        if (newsettings.api.client.bot.joinguild.enabled == true)
+        if (settings.api.client.bot.joinguild.enabled == true)
           if (scopes.replace(/guilds.join/g, "") == scopes)
             missingscopes.push("guilds.join");
-        if (newsettings.api.client.j4r.enabled)
+        if (settings.api.client.j4r.enabled)
           if (scopes.replace(/guilds/g, "") == scopes)
             missingscopes.push("guilds");
         if (missingscopes.length !== 0)
@@ -173,21 +170,21 @@ module.exports.load = async function (app, db) {
         });
         let guildsinfo = await guildsjson.json();
         if (userinfo.verified == true) {
-          if (newsettings.api.client.oauth2.ip.block.includes(ip))
+          if (settings.api.client.oauth2.ip.block.includes(ip))
             return res.send(
               "You could not sign in, because your IP has been blocked from signing in."
             );
   
           if (
-            newsettings.api.client.oauth2.ip["duplicate check"] == true &&
+            settings.api.client.oauth2.ip["duplicate check"] == true &&
             ip !== "127.0.0.1"
           ) {
             const ipuser = await db.get(`ipuser-${ip}`);
             if (ipuser && ipuser !== userinfo.id) {
               renderFile(
-                `./themes/${newsettings.defaulttheme}/alerts/alt.ejs`,
+                `./themes/${settings.defaulttheme}/alerts/alt.ejs`,
                 {
-                  settings: newsettings,
+                  settings: settings,
                   db,
                   extra: { home: { name: "VPN Detected" } },
                 },
@@ -207,7 +204,7 @@ module.exports.load = async function (app, db) {
             }
           }
   
-          if (newsettings.api.client.j4r.enabled) {
+          if (settings.api.client.j4r.enabled) {
             if (guildsinfo.message == "401: Unauthorized")
               return res.send(
                 "Please allow us to know what servers you are in to let the J4R system work properly. <a href='/login'>Login again</a>"
@@ -218,7 +215,7 @@ module.exports.load = async function (app, db) {
             let coins = (await db.get(`coins-${userinfo.id}`)) ?? 0;
   
             // Checking if the user has completed any new j4rs
-            for (const guild of newsettings.api.client.j4r.ads) {
+            for (const guild of settings.api.client.j4r.ads) {
               if (
                 guildsinfo.find((g) => g.id === guild.id) &&
                 !userj4r.find((g) => g.id === guild.id)
@@ -243,15 +240,15 @@ module.exports.load = async function (app, db) {
             await db.set(`coins-${userinfo.id}`, coins);
           }
   
-          if (newsettings.api.client.bot.joinguild.enabled == true) {
-            if (typeof newsettings.api.client.bot.joinguild.guildid == "string") {
+          if (settings.api.client.bot.joinguild.enabled == true) {
+            if (typeof settings.api.client.bot.joinguild.guildid == "string") {
               await fetch(
-                `https://discord.com/api/guilds/${newsettings.api.client.bot.joinguild.guildid}/members/${userinfo.id}`,
+                `https://discord.com/api/guilds/${settings.api.client.bot.joinguild.guildid}/members/${userinfo.id}`,
                 {
                   method: "put",
                   headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bot ${newsettings.api.client.bot.token}`,
+                    Authorization: `Bot ${settings.api.client.bot.token}`,
                   },
                   body: JSON.stringify({
                     access_token: codeinfo.access_token,
@@ -259,17 +256,17 @@ module.exports.load = async function (app, db) {
                 }
               );
             } else if (
-              typeof newsettings.api.client.bot.joinguild.guildid == "object"
+              typeof settings.api.client.bot.joinguild.guildid == "object"
             ) {
-              if (Array.isArray(newsettings.api.client.bot.joinguild.guildid)) {
-                for (let guild of newsettings.api.client.bot.joinguild.guildid) {
+              if (Array.isArray(settings.api.client.bot.joinguild.guildid)) {
+                for (let guild of settings.api.client.bot.joinguild.guildid) {
                   await fetch(
                     `https://discord.com/api/guilds/${guild}/members/${userinfo.id}`,
                     {
                       method: "put",
                       headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bot ${newsettings.api.client.bot.token}`,
+                        Authorization: `Bot ${settings.api.client.bot.token}`,
                       },
                       body: JSON.stringify({
                         access_token: codeinfo.access_token,
@@ -290,18 +287,18 @@ module.exports.load = async function (app, db) {
           }
   
           //give role on login
-          if (newsettings.api.client.bot.giverole.enabled == true) {
+          if (settings.api.client.bot.giverole.enabled == true) {
             if (
-              typeof newsettings.api.client.bot.giverole.guildid == "string" &&
-              typeof newsettings.api.client.bot.giverole.roleid == "string"
+              typeof settings.api.client.bot.giverole.guildid == "string" &&
+              typeof settings.api.client.bot.giverole.roleid == "string"
             ) {
               await fetch(
-                `https://discord.com/api/guilds/${newsettings.api.client.bot.giverole.guildid}/members/${userinfo.id}/roles/${newsettings.api.client.bot.giverole.roleid}`,
+                `https://discord.com/api/guilds/${settings.api.client.bot.giverole.guildid}/members/${userinfo.id}/roles/${settings.api.client.bot.giverole.roleid}`,
                 {
                   method: "put",
                   headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bot ${newsettings.api.client.bot.token}`,
+                    Authorization: `Bot ${settings.api.client.bot.token}`,
                   },
                 }
               );
@@ -313,12 +310,12 @@ module.exports.load = async function (app, db) {
           }
   
           // Applying role packages
-          if (newsettings.api.client.packages.rolePackages.roles) {
+          if (settings.api.client.packages.rolePackages.roles) {
             const member = await fetch(
-              `https://discord.com/api/v9/guilds/${newsettings.api.client.packages.rolePackages.roleServer}/members/${userinfo.id}`,
+              `https://discord.com/api/v9/guilds/${settings.api.client.packages.rolePackages.roleServer}/members/${userinfo.id}`,
               {
                 headers: {
-                  Authorization: `Bot ${newsettings.api.client.bot.token}`,
+                  Authorization: `Bot ${settings.api.client.bot.token}`,
                 },
               }
             );
@@ -327,31 +324,31 @@ module.exports.load = async function (app, db) {
               const currentpackage = await db.get(`package-${userinfo.id}`);
               if (
                 Object.values(
-                  newsettings.api.client.packages.rolePackages.roles
+                  settings.api.client.packages.rolePackages.roles
                 ).includes(currentpackage)
               ) {
                 for (const rolePackage of Object.keys(
-                  newsettings.api.client.packages.rolePackages.roles
+                  settings.api.client.packages.rolePackages.roles
                 )) {
                   if (
-                    newsettings.api.client.packages.rolePackages.roles[
+                    settings.api.client.packages.rolePackages.roles[
                       rolePackage
                     ] === currentpackage
                   ) {
                     if (!memberinfo.roles.includes(rolePackage)) {
                       await db.set(
                         `package-${userinfo.id}`,
-                        newsettings.api.client.packages.default
+                        settings.api.client.packages.default
                       );
                     }
                   }
                 }
               }
               for (const role of memberinfo.roles) {
-                if (newsettings.api.client.packages.rolePackages.roles[role]) {
+                if (settings.api.client.packages.rolePackages.roles[role]) {
                   await db.set(
                     `package-${userinfo.id}`,
-                    newsettings.api.client.packages.rolePackages.roles[role]
+                    settings.api.client.packages.rolePackages.roles[role]
                   );
                 }
               }
@@ -359,11 +356,11 @@ module.exports.load = async function (app, db) {
           }
   
           if (!(await db.get("users-" + userinfo.id))) {
-            if (newsettings.api.client.allow.newusers == true) {
+            if (settings.api.client.allow.newusers == true) {
               let genpassword = null;
-              if (newsettings.api.client.passwordgenerator.signup == true)
+              if (settings.api.client.passwordgenerator.signup == true)
                 genpassword = makeid(
-                  newsettings.api.client.passwordgenerator["length"]
+                  settings.api.client.passwordgenerator["length"]
                 );
               let accountjson = await fetch(
                 settings.pterodactyl.domain + "/api/application/users",

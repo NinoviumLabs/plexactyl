@@ -13,8 +13,7 @@ const fs = require("fs");
 const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const ejs = require("ejs");
-const log = require("../misc/log.js");
-const arciotext = require('../misc/afk.js')
+const log = require("../handlers/log.js");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Admin", "target_platform": "18.0.x" };
@@ -407,10 +406,7 @@ module.exports.load = async function (app, db) {
       );
       return res.redirect(successredirect + "?err=none");
     } else {
-      let newsettings = JSON.parse(
-        loadConfig("./config.toml")
-      );
-      if (!newsettings.api.client.packages.list[req.query.package])
+      if (!settings.api.client.packages.list[req.query.package])
         return res.redirect(`${failredirect}?err=INVALIDPACKAGE`);
       await db.set("package-" + req.query.id, req.query.package);
       adminjs.suspend(req.query.id);
@@ -726,26 +722,24 @@ module.exports.load = async function (app, db) {
     if (!(await db.get("users-" + req.query.id)))
       return res.send({ status: "invalid id" });
 
-    let newsettings = loadConfig("./config.toml");
+    if (settings.api.client.oauth2.link.slice(-1) == "/")
+      settings.api.client.oauth2.link =
+        settings.api.client.oauth2.link.slice(0, -1);
 
-    if (newsettings.api.client.oauth2.link.slice(-1) == "/")
-      newsettings.api.client.oauth2.link =
-        newsettings.api.client.oauth2.link.slice(0, -1);
+    if (settings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
+      settings.api.client.oauth2.callbackpath =
+        "/" + settings.api.client.oauth2.callbackpath;
 
-    if (newsettings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
-      newsettings.api.client.oauth2.callbackpath =
-        "/" + newsettings.api.client.oauth2.callbackpath;
-
-    if (newsettings.pterodactyl.domain.slice(-1) == "/")
-      newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(
+    if (settings.pterodactyl.domain.slice(-1) == "/")
+      settings.pterodactyl.domain = settings.pterodactyl.domain.slice(
         0,
         -1
       );
 
     let packagename = await db.get("package-" + req.query.id);
     let package =
-      newsettings.api.client.packages.list[
-        packagename ? packagename : newsettings.api.client.packages.default
+      settings.api.client.packages.list[
+        packagename ? packagename : settings.api.client.packages.default
       ];
     if (!package)
       package = {
@@ -759,7 +753,7 @@ module.exports.load = async function (app, db) {
 
     let pterodactylid = await db.get("users-" + req.query.id);
     let userinforeq = await fetch(
-      newsettings.pterodactyl.domain +
+      settings.pterodactyl.domain +
         "/api/application/users/" +
         pterodactylid +
         "?include=servers",
@@ -767,7 +761,7 @@ module.exports.load = async function (app, db) {
         method: "get",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${newsettings.pterodactyl.key}`,
+          Authorization: `Bearer ${settings.pterodactyl.key}`,
         },
       }
     );
@@ -794,7 +788,7 @@ module.exports.load = async function (app, db) {
           },
       userinfo: userinfo,
       coins:
-        newsettings.api.client.coins.enabled == true
+        settings.api.client.coins.enabled == true
           ? (await db.get("coins-" + req.query.id))
             ? await db.get("coins-" + req.query.id)
             : 0
@@ -823,8 +817,7 @@ module.exports.load = async function (app, db) {
   }
 
   module.exports.suspend = async function (discordid) {
-    let newsettings = loadConfig("./config.toml");
-    if (newsettings.api.client.allow.overresourcessuspend !== true) return;
+    if (settings.api.client.allow.overresourcessuspend !== true) return;
 
     let canpass = await indexjs.islimited();
     if (canpass == false) {
@@ -861,8 +854,8 @@ module.exports.load = async function (app, db) {
 
     let packagename = await db.get("package-" + discordid);
     let package =
-      newsettings.api.client.packages.list[
-        packagename || newsettings.api.client.packages.default
+      settings.api.client.packages.list[
+        packagename || settings.api.client.packages.default
       ];
 
     let extra = (await db.get("extra-" + discordid)) || {

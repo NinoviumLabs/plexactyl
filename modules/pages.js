@@ -1,10 +1,5 @@
 const indexjs = require("../app.js");
-const ejs = require("ejs");
 const express = require("express");
-const loadConfig = require("../handlers/config");
-const settings = loadConfig("./config.toml");
-const fetch = require("node-fetch");
-const arciotext = require("../misc/afk.js");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Pages", "target_platform": "18.0.x" };
