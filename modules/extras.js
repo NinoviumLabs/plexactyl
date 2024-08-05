@@ -6,16 +6,16 @@ const fetch = require("node-fetch");
 const Queue = require("../managers/Queue.js");
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Extra Features", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Extra Features", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
-  app.get("/panel", async (req, res) => {
+  app.get("/cp/panel", async (req, res) => {
     res.redirect(settings.pterodactyl.domain);
   });
 
-  app.get("/regen", async (req, res) => {
+  app.get("/cp/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
     let newsettings = loadConfig("./config.toml");
@@ -49,33 +49,33 @@ module.exports.load = async function (app, db) {
     );
 
     let theme = indexjs.get(req);
-    res.redirect("/security");
+    res.redirect("/cp/security");
   });
 
   /* Create a Queue */
   const queue = new Queue();
 
-  app.get("/transfercoins", async (req, res) => {
+  app.get("/cp/transfercoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect(`/`);
 
     const coins = parseInt(req.query.coins);
     if (!coins || !req.query.id)
-      return res.redirect(`/transfer?err=MISSINGFIELDS`);
+      return res.redirect(`/cp/transfer?err=MISSINGFIELDS`);
     if (req.query.id.includes(`${req.session.userinfo.id}`))
-      return res.redirect(`/transfer?err=CANNOTGIFTYOURSELF`);
+      return res.redirect(`/cp/transfer?err=CANNOTGIFTYOURSELF`);
 
-    if (coins < 1) return res.redirect(`/transfer?err=TOOLOWCOINS`);
+    if (coins < 1) return res.redirect(`/cp/transfer?err=TOOLOWCOINS`);
 
     queue.addJob(async (cb) => {
       const usercoins = await db.get(`coins-${req.session.userinfo.id}`);
       const othercoins = await db.get(`coins-${req.query.id}`);
       if (!othercoins) {
         cb();
-        return res.redirect(`/transfer?err=USERDOESNTEXIST`);
+        return res.redirect(`/cp/transfer?err=USERDOESNTEXIST`);
       }
       if (usercoins < coins) {
         cb();
-        return res.redirect(`/transfer?err=CANTAFFORD`);
+        return res.redirect(`/cp/transfer?err=CANTAFFORD`);
       }
 
       await db.set(`coins-${req.query.id}`, othercoins + coins);
@@ -86,7 +86,7 @@ module.exports.load = async function (app, db) {
         `${req.session.userinfo.username} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`
       );
       cb();
-      return res.redirect(`/transfer?err=none`);
+      return res.redirect(`/cp/transfer?err=none`);
     });
   });
 };

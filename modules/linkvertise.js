@@ -7,7 +7,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Linkvertise", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Linkvertise", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
@@ -16,7 +16,7 @@ module.exports.load = async function(app, db) {
   const lvcodes = {}
   const cooldowns = {}
 
-  app.get(`/lv/gen`, async (req, res) => {
+  app.get(`/cp/lv/gen`, async (req, res) => {
       if (!req.session.pterodactyl) return res.redirect("/login");
 
       if (cooldowns[req.session.userinfo.id] && cooldowns[req.session.userinfo.id] > Date.now()) {
@@ -49,7 +49,7 @@ module.exports.load = async function(app, db) {
       res.redirect(lvurl)
   })
 
-  app.get(`/lv/redeem`, async (req, res) => {
+  app.get(`/cp/lv/redeem`, async (req, res) => {
       if (!req.session.pterodactyl) return res.redirect("/");
 
       if (cooldowns[req.session.userinfo.id] && cooldowns[req.session.userinfo.id] > Date.now()) {

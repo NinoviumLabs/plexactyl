@@ -14,7 +14,7 @@ const arciotext = require("../misc/afk");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Plexactyl API 3.0 Beta", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Plexactyl API 3.0 Beta", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
@@ -23,36 +23,36 @@ module.exports.load = async function (app, db) {
    * GET /giftcoins
    * Gifts coins to another user.
    */
-    app.get("/giftcoins", async (req, res) => {
+    app.get("/cp/giftcoins", async (req, res) => {
       if (!req.session.pterodactyl) return res.redirect(`/`);
   
       const coins = parseInt(req.query.coins)
-      if (!coins || !req.query.id) return res.redirect(`/transfer?err=MISSINGFIELDS`);
-      if (req.query.id.includes(`${req.session.userinfo.id}`)) return res.redirect(`/transfer?err=CANNOTGIFTYOURSELF`)
+      if (!coins || !req.query.id) return res.redirect(`/cp/transfer?err=MISSINGFIELDS`);
+      if (req.query.id.includes(`${req.session.userinfo.id}`)) return res.redirect(`/cp/transfer?err=CANNOTGIFTYOURSELF`)
   
-      if (coins < 1) return res.redirect(`/transfer?err=TOOLOWCOINS`)
+      if (coins < 1) return res.redirect(`/cp/transfer?err=TOOLOWCOINS`)
   
       const usercoins = await db.get(`coins-${req.session.userinfo.id}`)
       const othercoins = await db.get(`coins-${req.query.id}`)
       if (!othercoins) {
-        return res.redirect(`/transfer?err=USERDOESNTEXIST`)
+        return res.redirect(`/cp/transfer?err=USERDOESNTEXIST`)
       }
       if (usercoins < coins) {
-        return res.redirect(`/transfer?err=CANTAFFORD`)
+        return res.redirect(`/cp/transfer?err=CANTAFFORD`)
       }
     
       await db.set(`coins-${req.query.id}`, othercoins + coins)
       await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins)
   
       log('Gifted Coins', `${req.session.userinfo.username} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`)
-      return res.redirect(`/transfer?err=none`);
+      return res.redirect(`/cp/transfer?err=none`);
     });
   
   /**
    * GET /api
    * Returns the status of the API.
    */
-  app.get("/api", async (req, res) => {
+  app.get("/cp/api", async (req, res) => {
     /* Check that the API key is valid */
     let authentication = await check(req, res);
     if (!authentication ) return;

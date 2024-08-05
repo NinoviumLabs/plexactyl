@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 const arciotext = require("../misc/afk.js");
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Pages", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Pages", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;

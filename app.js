@@ -1,8 +1,5 @@
 "use strict";
 
-// Load logging.
-require("./misc/console.js")();
-
 // Load packages.
 const path = require("path");
 const fs = require("fs");
@@ -90,10 +87,7 @@ const db = new Database(settings.database);
 module.exports.db = db;
 
 if (cluster.isMaster) {
-  // Display ASCII art and loading spinner
-  const asciiArt = fs.readFileSync('./misc/ascii.txt', 'utf8');
-  console.log('\n' + asciiArt + '\n');
-
+  // Display loading spinner
   let spinnerFrames = ['-', '\\', '|', '/'];
   let currentFrame = 0;
   
@@ -125,14 +119,9 @@ if (cluster.isMaster) {
         return;
       }
     
-      const { name, api_level, target_platform } = module.plexactylModule;
+      const { name, target_platform } = module.plexactylModule;
   
-      if (target_platform !== settingsVersion) {
-        modulesTable.push({ File: file, Name: name, Status: `Error: Target platform mismatch (expected: ${settingsVersion}, found: ${target_platform})`, 'API Level': api_level, 'Target Platform': target_platform });
-        return;
-      }
-  
-      modulesTable.push({ File: file, Name: name, Status: 'Module loaded!', 'API Level': api_level, 'Target Platform': target_platform });
+      modulesTable.push({ File: file, Name: name, 'Target Platform': target_platform });
     });
 
     console.table(modulesTable);
@@ -269,7 +258,7 @@ if (cluster.isMaster) {
         req.session.pterodactyl.id !==
         (await db.get("users-" + req.session.userinfo.id))
       )
-        return res.redirect("/login?prompt=none");
+        return res.redirect("/cp/login?prompt=none");
     let theme = indexjs.get(req);
     let newsettings = loadConfig("./config.toml");
     if (newsettings.api.afk.enabled == true)
@@ -277,7 +266,7 @@ if (cluster.isMaster) {
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname))
       if (!req.session.userinfo || !req.session.pterodactyl)
         return res.redirect(
-          "/login" +
+          "/cp/login" +
             (req._parsedUrl.pathname.slice(0, 1) == "/"
               ? "?redirect=" + req._parsedUrl.pathname.slice(1)
               : "")

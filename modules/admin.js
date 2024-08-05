@@ -17,12 +17,12 @@ const log = require("../misc/log.js");
 const arciotext = require('../misc/afk.js')
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Admin", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Admin", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
-  app.get("/setcoins", async (req, res) => {
+  app.get("/cp/setcoins", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -81,7 +81,7 @@ module.exports.load = async function (app, db) {
     res.redirect(successredirect + "?err=none");
   });
 
-  app.get("/addcoins", async (req, res) => {
+  app.get("/cp/addcoins", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -142,7 +142,7 @@ module.exports.load = async function (app, db) {
     res.redirect(successredirect + "?err=none");
   });
 
-  app.get("/setresources", async (req, res) => {
+  app.get("/cp/setresources", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -253,7 +253,7 @@ module.exports.load = async function (app, db) {
     }
   });
 
-  app.get("/addresources", async (req, res) => {
+  app.get("/cp/addresources", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -362,7 +362,7 @@ module.exports.load = async function (app, db) {
     }
   });
 
-  app.get("/setplan", async (req, res) => {
+  app.get("/cp/setplan", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -423,7 +423,7 @@ module.exports.load = async function (app, db) {
     }
   });
 
-  app.get("/create_coupon", async (req, res) => {
+  app.get("/cp/create_coupon", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -519,7 +519,7 @@ module.exports.load = async function (app, db) {
     );
   });
 
-  app.get("/revoke_coupon", async (req, res) => {
+  app.get("/cp/revoke_coupon", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -570,7 +570,7 @@ module.exports.load = async function (app, db) {
     );
   });
 
-  app.get("/remove_account", async (req, res) => {
+  app.get("/cp/remove_account", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -652,7 +652,7 @@ module.exports.load = async function (app, db) {
     );
   });
 
-  app.get("/getip", async (req, res) => {
+  app.get("/cp/getip", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);
@@ -695,7 +695,7 @@ module.exports.load = async function (app, db) {
     return res.redirect(successredirect + "?err=NONE&ip=" + ip);
   });
 
-  app.get("/userinfo", async (req, res) => {
+  app.get("/cp/userinfo", async (req, res) => {
     let theme = indexjs.get(req);
 
     if (!req.session.pterodactyl) return four0four(req, res, theme);

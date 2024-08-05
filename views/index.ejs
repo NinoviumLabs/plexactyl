@@ -1,41 +1,37 @@
-<html class="h-full">
-<%- include('./components/head') %>
-<body class="h-full bg-gray-100 p-12" style="font-family: 'Inter'">
-  <div class="flex min-h-full">
-    <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-      <div class="mx-auto w-full max-w-sm lg:w-96">
-        <div>
-          <span class="text-gray-400 text-lg font-semibold tracking-tight mt-2 mb-2"><%= settings.name %></span>
-          <h2 class="mt-6 text-3xl font-semibold tracking-tight text-gray-600">Sign in to your account</h2>
-          <p class="mt-2 text-sm text-gray-500">
-            Welcome back! Sign in to continue.
-          </p>
-        </div>
 
-        <div class="mt-16">
-          <div>
-            <div class="relative mt-6">
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="w-full border-t border-gray-300"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="bg-gray-100 px-5 text-gray-500">Choose an OAuth2 provider</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <form action="#" method="POST" class="space-y-6">
-              <div>
-                <a href="../login" class="transition inline-flex items-center rounded-2xl bg-gray-200 px-8 py-3 text-sm font-medium text-gray-600 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 w-full flex text-center justify-center">Sign in with Discord</a>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+<!doctype html>
+<html>
+<head>
+    <title><%= settings.name %></title>
+    <link rel="icon" type="image/x-icon" href="<%= settings.icon %>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+<body style="font-family: 'Inter'">
+<div class="relative isolate overflow-hidden bg-white">
+  <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+    <defs>
+      <pattern id="0787a7c5-978c-4f66-83c7-11c213f99cb7" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+        <path d="M.5 200V.5H200" fill="none" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" stroke-width="0" fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
+  </svg>
+  <div class="mx-auto max-w-7xl px-6 pt-20 sm:pb-32 lg:flex lg:py-30 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+      <img class="h-11" src="<%= settings.icon %>" alt="Logo">
+      <h1 class="mt-10 text-xl font-semibold tracking-tight text-gray-800 sm:text-6xl">Your #1 platform for hosting a Minecraft server, at no cost.</h1>
+      <p class="mt-6 text-lg leading-8 tracking-tught text-gray-600">Everything you need for your project - fast and easy. Deploy a free container, game server or service in under 60 seconds. </p>
+      <div class="mt-10 flex items-center gap-x-6">
+        <a href="/cp/login" class="rounded-xl bg-gray-600 transition px-5 py-2 text-base font-medium leading-7 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Sign in</a>
     </div>
-    <div class="relative hidden w-0 flex-1 lg:block">
-      <img class="absolute inset-0 h-full w-full object-cover rounded-3xl" src="../assets/loginBackground.png" alt="">
     </div>
   </div>
+</div>
+
 </body>
+</html>

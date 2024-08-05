@@ -15,12 +15,12 @@ if (settings.pterodactyl)
   }
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Pterodactyl", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Pterodactyl", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
-  app.get("/updateinfo", async (req, res) => {
+  app.get("/cp/updateinfo", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
     const cacheaccount = await getPteroUser(req.session.userinfo.id, db).catch(
       () => {
@@ -34,10 +34,10 @@ module.exports.load = async function (app, db) {
     if (req.query.redirect)
       if (typeof req.query.redirect == "string")
         return res.redirect("/" + req.query.redirect);
-    res.redirect("/servers");
+    res.redirect("/cp/profile");
   });
 
-  app.get("/create", async (req, res) => {
+  app.get("/cp/create", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
     let theme = indexjs.get(req);
@@ -268,7 +268,7 @@ module.exports.load = async function (app, db) {
               "created server",
               `${req.session.userinfo.username} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
             );
-            return res.redirect("/servers?err=CREATED");
+            return res.redirect("/cp/servers/new?err=CREATED");
           } else {
             res.redirect(`${redirectlink}?err=NOTANUMBER`);
           }
@@ -284,7 +284,7 @@ module.exports.load = async function (app, db) {
     }
   });
 
-  app.get("/modify", async (req, res) => {
+  app.get("/cp/modify", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
     let theme = indexjs.get(req);
@@ -475,7 +475,7 @@ module.exports.load = async function (app, db) {
           pterorelationshipsserverdata;
         let theme = indexjs.get(req);
         adminjs.suspend(req.session.userinfo.id);
-        res.redirect("/servers?err=MODIFIED");
+        res.redirect("/cp/servers/new?err=MODIFIED");
       } else {
         res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
       }
@@ -488,7 +488,7 @@ module.exports.load = async function (app, db) {
     }
   });
 
-  app.get("/delete", async (req, res) => {
+  app.get("/cp/delete", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
     if (!req.query.id) return res.send("Missing id.");
@@ -530,7 +530,7 @@ module.exports.load = async function (app, db) {
 
       adminjs.suspend(req.session.userinfo.id);
 
-      return res.redirect("/servers?err=DELETED");
+      return res.redirect("/cp/servers/new?err=DELETED");
     } else {
       res.redirect(
         theme.settings.redirect.deleteserverdisabled

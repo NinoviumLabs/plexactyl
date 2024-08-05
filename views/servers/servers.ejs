@@ -92,7 +92,7 @@
             <h3 class="mt-4 text-md font-semibold tracking-tight text-gray-900">Create your first server</h3>
             <p class="mt-1 text-xs text-gray-500">You can deploy a server in just a few seconds.</p>
             <div class="mt-6">
-              <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-full bg-gray-200 px-6 py-1.5 text-xs font-light text-gray-700 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+              <a href="../cp/servers/new" type="button" class="transition inline-flex items-center rounded-full bg-gray-200 px-6 py-1.5 text-xs font-light text-gray-700 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-4 w-4 text-gray-800">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="mt-5 flex lg:ml-4 lg:mt-0">
                   <span class="sm:ml-3">
-                    <a href="../edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="transition inline-flex items-center rounded-2xl bg-gray-100 px-8 py-2 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                    <a href="../cp/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="transition inline-flex items-center rounded-2xl bg-gray-100 px-8 py-2 text-sm font-medium text-gray-600 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
                       </svg>
@@ -147,7 +147,7 @@
             <% if (pterodactyl.relationships.servers.data.length == 1) { %>
             <div class="px-4 py-5 bg-gray-50 rounded-3xl overflow-hidden sm:p-6 justify-center">
               <div class="flex flex-col items-center justify-center h-full">
-                <a href="../servers/new" class="transition inline-flex items-center rounded-2xl bg-gray-100 p-4 text-sm font-light text-gray-600 hover:text-gray-900 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                <a href="../cp/servers/new" class="transition inline-flex items-center rounded-2xl bg-gray-100 p-4 text-sm font-light text-gray-600 hover:text-gray-900 hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                   </svg>

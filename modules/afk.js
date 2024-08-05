@@ -7,7 +7,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "AFK Page", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "AFK Page", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;

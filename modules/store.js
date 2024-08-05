@@ -8,12 +8,12 @@ const ejs = require("ejs");
 const log = require("../misc/log.js");
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Resources Store", "api_level": 3, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Resources Store", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
-  app.get("/buy", async (req, res) => {
+  app.get("/cp/buy", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
 
     let settings = await enabledCheck(req, res);

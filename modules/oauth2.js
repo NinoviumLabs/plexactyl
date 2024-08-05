@@ -23,12 +23,12 @@ if (settings.api.client.oauth2.link.slice(-1) == "/")
     settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 
 /* Ensure platform release target is met */
-const plexactylModule = { "name": "Discord OAuth2 Legacy", "api_level": 2.2, "target_platform": "18.0.0" };
+const plexactylModule = { "name": "Discord OAuth2", "target_platform": "18.0.x" };
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
-    app.get("/login", async (req, res) => {
+    app.get("/cp/login", async (req, res) => {
       if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
       let newsettings = loadConfig("./config.toml");
       res.redirect(
@@ -53,7 +53,7 @@ module.exports.load = async function (app, db) {
       );
     });
   
-    app.get("/logout", (req, res) => {
+    app.get("/cp/logout", (req, res) => {
       let theme = indexjs.get(req);
       req.session.destroy(() => {
         return res.redirect(

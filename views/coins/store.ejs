@@ -170,22 +170,22 @@
             <script>
               async function buyRAM() {
                 let amount = encodeURIComponent(document.getElementById("ram").value);
-                document.location.href = `/buy?type=ram&amount=${amount}`;
+                document.location.href = `/cp/buy?type=ram&amount=${amount}`;
               };
 
               async function buyDisk() {
                 let amount = encodeURIComponent(document.getElementById("disk").value);
-                document.location.href = `/buy?type=disk&amount=${amount}`;
+                document.location.href = `/cp/buy?type=disk&amount=${amount}`;
               };
 
               async function buyServers() {
                 let amount = encodeURIComponent(document.getElementById("servers").value);
-                document.location.href = `/buy?type=servers&amount=${amount}`;
+                document.location.href = `/cp/buy?type=servers&amount=${amount}`;
               };
 
               async function buyCPU() {
                 let amount = encodeURIComponent(document.getElementById("cpu").value);
-                document.location.href = `/buy?type=cpu&amount=${amount}`;
+                document.location.href = `/cp/buy?type=cpu&amount=${amount}`;
               };
             </script>
 
