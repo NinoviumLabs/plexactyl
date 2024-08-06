@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.0.3"
+version = "18.0.4"
 
 # Additional settings
 testing = false
@@ -22,7 +22,6 @@ port = 3_000
 
 # Module settings (formerly API)
 [api.client]
-accountSwitcher = true
 
   [api.client.api]
   enabled = false

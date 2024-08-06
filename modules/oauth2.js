@@ -62,7 +62,7 @@ module.exports.load = async function (app, db) {
     });
   
     app.get(settings.api.client.oauth2.callbackpath, async (req, res) => {
-      if (!req.query.code) return res.redirect(`/login`);
+      if (!req.query.code) return res.redirect(`/cp/login`);
       res.send(`
       <!doctype html>
       <html>
@@ -87,7 +87,7 @@ module.exports.load = async function (app, db) {
       </html>
   
       <script type="text/javascript" defer>
-        history.pushState('/login', 'Logging in...', '/login')
+        history.pushState('/cp/login', 'Logging in...', '/cp/login')
         window.location.replace('/submitlogin?code=${encodeURIComponent(
           req.query.code.replace(/'/g, "")
         )}')
@@ -207,7 +207,7 @@ module.exports.load = async function (app, db) {
           if (settings.api.client.j4r.enabled) {
             if (guildsinfo.message == "401: Unauthorized")
               return res.send(
-                "Please allow us to know what servers you are in to let the J4R system work properly. <a href='/login'>Login again</a>"
+                "Please allow us to know what servers you are in to let the J4R system work properly. <a href='/cp/login'>Login again</a>"
               );
             let userj4r = (await db.get(`j4rs-${userinfo.id}`)) ?? [];
             await guildsinfo;
@@ -469,7 +469,7 @@ module.exports.load = async function (app, db) {
           "Not verified a Discord account. Please verify the email on your Discord account."
         );
       } else {
-        res.redirect(`/login`);
+        res.redirect(`/cp/login`);
       }
     });
   };

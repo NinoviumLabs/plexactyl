@@ -96,34 +96,9 @@
         <div class="mb-4 flex">
           <span class="text-gray-700 text-lg font-semibold tracking-tight mt-2 mb-2"><%= settings.name %></span>
         </div>
-        <div class="flex-shrink-0 flex shadow bg-gray-100 border border-gray-300/70 rounded-3xl 
-        <% if (settings.api.client.accountSwitcher !== true) { %>
-          p-4
-        <% } else { %>
-          p-2
-        <% } %> ">
-          <% if (settings.api.client.accountSwitcher !== true) { %>
-          <% /* Legacy account view, will only be seen if the account switcher is disabled */ %>
-          <a href="#" class="flex-shrink-0 w-full group block">
-            <div class="flex items-center">
-              <div>
-                <img class="inline-block h-9 w-9 rounded-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
-              </div>
-              <div class="ml-3">
-                <p class="text-sm font-semibold text-gray-800"><%= userinfo.global_name %></p>
-                <p class="text-xs font-medium text-gray-400 group-hover:text-gray-500 transition">
-                  <% if (typeof packagename.charAt(0) == 'number') { %>
-                  <%= packagename %> plan
-                  <% } else { %>
-                  <%= packagename.charAt(0).toUpperCase() + packagename.slice(1) %> plan
-                  <% } %>
-                </p>
-              </div>
-            </div>
-          </a>
-          <% } else { %>
+        <div class="flex-shrink-0 flex shadow bg-gray-100 border border-gray-300/70 rounded-3xl p-2">
           <% /* v2 of account view with built in account switcher */ %>
-          <a href="/cp/accounts" class="flex-shrink-0 w-full group block transition hover:bg-gray-200/50 hover:shadow-none rounded-2xl p-2">
+          <a class="flex-shrink-0 w-full group block transition hover:bg-gray-200/50 hover:shadow-none rounded-2xl p-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center">
                 <div>
@@ -142,13 +117,9 @@
               </div>
               <!-- SVG Icon -->
               <div class="ml-auto mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-gray-400">
-                  <path fill-rule="evenodd" d="M10.53 3.47a.75.75 0 0 0-1.06 0L6.22 6.72a.75.75 0 0 0 1.06 1.06L10 5.06l2.72 2.72a.75.75 0 1 0 1.06-1.06l-3.25-3.25Zm-4.31 9.81 3.25 3.25a.75.75 0 0 0 1.06 0l3.25-3.25a.75.75 0 1 0-1.06-1.06L10 14.94l-2.72-2.72a.75.75 0 0 0-1.06 1.06Z" clip-rule="evenodd" />
-                </svg>
               </div>
             </div>
           </a>
-          <% } %>
         </div>
         <div class="pt-4">
           <div class="relative mt-1 flex items-center">

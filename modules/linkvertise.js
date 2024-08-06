@@ -55,7 +55,7 @@ module.exports.load = async function(app, db) {
 
       const code = req.query.code
       if (!code) return res.send('An error occured with your browser!')
-      if (!req.headers.referer || !req.headers.referer.includes('linkvertise.com')) return res.send('<p>Hm... our systems detected something going on! Please make sure you are not using an ad blocker (or linkvertise bypasser).</p> <img src="https://i.imgur.com/lwbn3E9.png" alt="robot" height="300">')
+      if (!req.headers.referer || !req.headers.referer.includes('linkvertise.com')) return res.redirect('/cp/lv?err=BYPASSER')
 
       const usercode = lvcodes[req.session.userinfo.id]
       if (!usercode) return res.redirect(`/cp/lv`)
@@ -64,7 +64,7 @@ module.exports.load = async function(app, db) {
 
       // Checking at least the minimum allowed time passed between generation and completion
       if (((Date.now() - usercode.generated) / 1000) < settings.linkvertise.minTimeToComplete) {
-          return res.send('<p>Hm... our systems detected something going on! Please make sure you are not using an ad blocker (or linkvertise bypasser). <a href="/lv">Generate another link</a></p> <img src="https://i.imgur.com/lwbn3E9.png" alt="robot" height="300">')
+          return res.redirect('/cp/lv?err=BYPASSER')
       }
 
       cooldowns[req.session.userinfo.id] = Date.now() + (settings.linkvertise.cooldown * 1000)

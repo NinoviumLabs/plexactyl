@@ -13,7 +13,7 @@ const plexactylModule = { "name": "Resources Store", "target_platform": "18.0.x"
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
   app.get("/cp/buy", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!req.session.pterodactyl) return res.redirect("/cp/login");
 
     let settings = await enabledCheck(req, res);
     if (!settings) return;

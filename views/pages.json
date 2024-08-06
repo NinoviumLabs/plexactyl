@@ -51,7 +51,6 @@
     "cp/lv": "coins/linkvertise.ejs",
     "cp/store": "coins/store.ejs",
     "cp/servers": "servers/servers.ejs",
-    "cp/accounts": "accounts.ejs",
     "cp/admin": "admin/admin.ejs"
   },
   "mustbeloggedin": [
@@ -65,6 +64,6 @@
     "/cp/lv",
     "/cp/store",
     "/cp/servers",
-    "/cp/accounts"
+    "/cp/admin"
   ]
 }

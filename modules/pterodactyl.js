@@ -19,7 +19,7 @@ const plexactylModule = { "name": "Pterodactyl", "target_platform": "18.0.x" };
 module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
   app.get("/cp/updateinfo", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!req.session.pterodactyl) return res.redirect("/cp/login");
     const cacheaccount = await getPteroUser(req.session.userinfo.id, db).catch(
       () => {
         return res.send(
@@ -36,7 +36,7 @@ module.exports.load = async function (app, db) {
   });
 
   app.get("/cp/create", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!req.session.pterodactyl) return res.redirect("/cp/login");
 
     let theme = indexjs.get(req);
 
@@ -282,7 +282,7 @@ module.exports.load = async function (app, db) {
   });
 
   app.get("/cp/modify", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!req.session.pterodactyl) return res.redirect("/cp/login");
 
     let theme = indexjs.get(req);
 
@@ -484,7 +484,7 @@ module.exports.load = async function (app, db) {
   });
 
   app.get("/cp/delete", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!req.session.pterodactyl) return res.redirect("/cp/login");
 
     if (!req.query.id) return res.send("Missing id.");
 
