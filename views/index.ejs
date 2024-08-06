@@ -1,16 +1,7 @@
 
 <!doctype html>
 <html>
-<head>
-    <title><%= settings.name %></title>
-    <link rel="icon" type="image/x-icon" href="<%= settings.icon %>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-  
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
+<%- include('./components/head') %>
 <body style="font-family: 'Inter'">
 <div class="relative isolate overflow-hidden bg-white">
   <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
