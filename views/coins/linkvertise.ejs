@@ -24,6 +24,23 @@
               </div>
             </div>
           </div>
+          <% if (req.query.err) { %>
+            <div class="rounded-3xl bg-gray-200 p-8 mb-5">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-md font-medium tracking-tight text-gray-700">An error was encountered</h3>
+                  <div class="mt-1 text-sm text-gray-500">
+                    <p>Error code: <code><%= req.query.err %></code></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
           <!-- content -->
           <div class="justify-stretch mt-6 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
             <a href="/cp/lv/gen" type="button" class="transition inline-flex items-center rounded-2xl bg-gray-200 px-8 py-2 text-sm font-medium text-gray-600 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
