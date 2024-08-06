@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.0.4"
+version = "18.0.5"
 
 # Additional settings
 testing = false
@@ -97,13 +97,13 @@ port = 3_000
   "/regen" = 1
   "/renew" = 1
   "/api/userinfo" = 1
-
+  
   [api.client.packages]
   default = "default"
 
 # Packages
 [api.client.packages.list.default]
-ram = 2_480
+ram = 2_048
 disk = 10_240
 cpu = 150
 servers = 2

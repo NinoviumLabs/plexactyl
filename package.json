@@ -1,6 +1,6 @@
 {
   "name": "plexactyl",
-  "version": "18.0.4",
+  "version": "18.0.5",
   "description": "The official Plexactyl client area for the Pterodactyl Panel.",
   "main": "app.js",
   "author": "Zen Software",

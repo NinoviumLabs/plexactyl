@@ -84,7 +84,7 @@ module.exports.load = async function(app, db) {
       const coins = await db.get(`coins-${req.session.userinfo.id}`)
       await db.set(`coins-${req.session.userinfo.id}`, coins + settings.linkvertise.coins)
 
-      res.redirect(`/cp/lv?success=true`)
+      res.redirect(`/cp/lv?err=none`)
   })
   
   app.get(`/api/lvcooldown`, async (req, res) => {
