@@ -1,13 +1,7 @@
 
 const loadConfig = require("../handlers/config");
 const settings = loadConfig("./config.toml");
-
-if (settings.pterodactyl)
-  if (settings.pterodactyl.domain) {
-    if (settings.pterodactyl.domain.slice(-1) == "/")
-      settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
-  }
-
+const TOML = require('@iarna/toml')
 const fetch = require("node-fetch");
 const fs = require("fs");
 const indexjs = require("../app.js");
@@ -17,6 +11,12 @@ const log = require("../handlers/log.js");
 
 /* Ensure platform release target is met */
 const plexactylModule = { "name": "Admin", "target_platform": "18.0.x" };
+
+if (settings.pterodactyl)
+  if (settings.pterodactyl.domain) {
+    if (settings.pterodactyl.domain.slice(-1) == "/")
+      settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+  }
 
 /* Module */
 module.exports.plexactylModule = plexactylModule;

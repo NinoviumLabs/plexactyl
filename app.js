@@ -147,6 +147,15 @@ if (cluster.isMaster) {
         cluster.workers[id].kill();
       }
     });
+
+    // Watch for file changes and reboot workers
+    const watcher2 = chokidar.watch('./config.toml');
+    watcher2.on('change', (path) => {
+      console.log(chalk.yellow(`File changed: ${path}. Rebooting workers...`));
+      for (const id in cluster.workers) {
+        cluster.workers[id].kill();
+      }
+    });
   }
   
   cluster.on('online', (worker) => {

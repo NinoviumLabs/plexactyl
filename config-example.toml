@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.0.2"
+version = "18.0.3"
 
 # Additional settings
 testing = false
@@ -19,7 +19,6 @@ key = "PTERO_KEY"
 # Webserver
 [website]
 port = 3_000
-# Secret has been removed in 18.0.2
 
 # Module settings (formerly API)
 [api.client]
@@ -28,7 +27,6 @@ accountSwitcher = true
   [api.client.api]
   enabled = false
   code = "API_KEY"
-
 
 # Frontend for j4r is unavailable.
   [api.client.j4r]
@@ -106,33 +104,19 @@ accountSwitcher = true
 
 # Packages
 [api.client.packages.list.default]
-ram = 4_096
-disk = 40_960
-cpu = 100
-servers = 4
-
-[api.client.packages.list.verified]
-ram = 4_096
-disk = 40_960
-cpu = 100
-servers = 4
-
-[api.client.packages.list.pro]
-ram = 8_192
-disk = 81_920
-cpu = 250
-servers = 8
+ram = 2_480
+disk = 10_240
+cpu = 150
+servers = 2
 
     [api.client.packages.rolePackages]
     note = "This allows you to set a different plan/package to people who have a specific role however this requires the Discord bot to be configured and functioning. This is mainly used for Boost rewards."
     roleServer = ""
 
       [api.client.packages.rolePackages.roles]
-      1232687984462135377 = "verified"
 
 [api.client.locations.1]
-name = "Falkenstein, DE"
-pro = false
+name = "Example Location"
 
 # Use my optimized docker images! ghcr.io/zenllc/java:21 for java 21 or ghcr.io/zenllc/java:17 for java 17!
 
