@@ -94,6 +94,7 @@ From Heliactyl or Dashactyl v0.4 to Plexactyl:
 2. Download database.sqlite (This is the Database which includes important data about the user and servers) 
 <br>
 ⚠️ database.sqlite compatibility with Dashactyl 0.4 or Plexactyl/Heliactyl 12 has not been tested.
+<br>
 3. Delete all files in the directory of the server (or delete and remake the folder if done in ssh)
 4. Upload the latest Plexactyl release and unzip it
 5. Upload database.sqlite and reconfigure config.toml
