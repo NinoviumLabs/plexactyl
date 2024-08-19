@@ -122,7 +122,7 @@
                 async function addCoins() {
                   let id1 = encodeURIComponent(document.getElementById("id1").value);
                   let amount1 = encodeURIComponent(document.getElementById("amount1").value);
-                  document.location.href = `/addcoins?id=${id1}&coins=${amount1}`;
+                  document.location.href = `/cp/addcoins?id=${id1}&coins=${amount1}`;
                 };
               </script>
 
@@ -162,7 +162,7 @@
                     let memory = encodeURIComponent(document.getElementById("memory").value * 1024);
                     let storage = encodeURIComponent(document.getElementById("storage").value * 1024);
                     let servers = encodeURIComponent(document.getElementById("servers").value);
-                    document.location.href = `/addresources?id=${id2}&cpu=${cpu}&ram=${memory}&disk=${storage}&servers=${servers}`;
+                    document.location.href = `/cp/addresources?id=${id2}&cpu=${cpu}&ram=${memory}&disk=${storage}&servers=${servers}`;
                   };
                 </script>
               </div>
