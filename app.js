@@ -31,7 +31,6 @@ const defaultthemesettings = {
   redirect: {},
   pages: {},
   mustbeloggedin: [],
-  mustbeadmin: [],
   variables: {},
 };
 
@@ -48,6 +47,7 @@ async function renderdataeval(req, theme) {
     req: req,
     settings: settings,
     userinfo: req.session.userinfo,
+    queued: (req.session.userinfo ? await db.get(req.session.userinfo.id + '-queued') : { }),
     packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : settings.api.client.packages.default : null,
     extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
       ram: 0,

@@ -45,7 +45,7 @@ module.exports.load = async function (app, db) {
     );
 
     let theme = indexjs.get(req);
-    res.redirect("/cp/security");
+    res.redirect("/cp/account");
   });
 
 function makeid(length) {

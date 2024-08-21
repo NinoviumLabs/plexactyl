@@ -1,7 +1,7 @@
 {
   "name": "plexactyl",
-  "version": "18.0.5",
-  "description": "The official Plexactyl client area for the Pterodactyl Panel.",
+  "version": "18.1.0",
+  "description": "The next generation of dashboards for Pterodactyl.",
   "main": "app.js",
   "author": "Zen Software",
   "dependencies": {
@@ -17,8 +17,7 @@
     "javascript-obfuscator": "^4.0.2",
     "keyv": "^4.0.4",
     "node-cache": "^5.1.2",
-    "node-fetch": "^2.6.6",
-    "preline": "^2.3.0"
+    "node-fetch": "^2.6.6"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",

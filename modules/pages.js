@@ -34,5 +34,4 @@ module.exports.load = async function (app, db) {
   });
 
   app.use("/assets", express.static("./assets"));
-  app.use("/preline", express.static("./node_modules/preline"));
 };

@@ -1,0 +1,71 @@
+<html class="h-full bg-bluey-800">
+<%- include('../components/head') %>
+<body style="font-family: 'Whitney', sans-serif;" class="bg-bluey-800 h-full">
+
+<div>
+  <%- include('../components/navigation') %>
+  <main>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <% if (req.query.err == "LINKVERTISECOMPLETED") { %>
+        <div class="rounded-md bg-green-800 p-4 mb-8">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <!-- Heroicon name: solid/information-circle -->
+              <svg class="h-5 w-5 text-green-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3 flex-1 md:flex md:justify-between">
+              <p class="text-sm text-green-400">Linkvertise link has been successfully completed!</p>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      <% if (req.session.password) { %>
+      <div class="rounded-md bg-green-800 p-4 mb-8">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <!-- Heroicon name: solid/information-circle -->
+            <svg class="h-5 w-5 text-green-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3 flex-1 md:flex md:justify-between">
+            <p class="text-sm text-green-400">Password updated to: <code><%= req.session.password %></code></p>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <!-- AFK Earnings Section -->
+      <div class="bg-bluey-700 px-4 py-5 border-b border-bluey-600 rounded-t sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-white">Earn</h3>
+        <p class="mt-1 text-sm text-bluey-300">Earn free Coins for AFKing.</p>
+      </div>
+      <div class="bg-bluey-700 rounded-b px-4 py-5 sm:px-6 text-bluey-300 text-sm">
+        <p>Every <%= settings.api.afk.every %> seconds, you'll earn <%= settings.api.afk.coins %> Coins.</p>
+        <p>You will gain Coins again in <span id="arciotimer"><%= settings.api.afk.every %></span> seconds.</p>
+        <p>You have gained <span id="arciogainedcoins">0</span> Coins this session</p>
+        <span id="sessionDuration" class="hidden"></span>
+        <script>
+          <%- arcioafktext %>
+        </script>
+      </div>
+
+      <!-- Earn via Linkvertise Section -->
+      <div class="bg-bluey-700 mt-6 px-4 py-5 border-b border-bluey-600 rounded-t sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-white">Earn via Linkvertise</h3>
+        <p class="mt-1 text-sm text-bluey-300">Complete offers through Linkvertise to earn additional Coins.</p>
+      </div>
+      <div class="bg-bluey-700 rounded-b px-4 py-5 sm:px-6 text-bluey-300 text-sm">
+        <p>You can earn more Coins by completing Linkvertise offers. Click the button below to get started!</p>
+        <div class="mt-4">
+          <a href="/cp/lv/gen" type="button" class="transition ease-in-out delay-100 group relative flex w-1/4 justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none ml-2">
+            Earn via Linkvertise
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

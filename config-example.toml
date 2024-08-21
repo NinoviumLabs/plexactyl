@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.0.5"
+version = "18.1.0"
 
 # Additional settings
 testing = false
@@ -115,12 +115,17 @@ servers = 2
       [api.client.packages.rolePackages.roles]
 
 [api.client.locations.1]
-name = "Example Location"
+city = "Falkenstein"
+country = "Germany"
+code = "DE" # Put this also as the ISO code unless you have multiple locations in the same country
+iso = "DE" # ISO Code
 
 # Use my optimized docker images! ghcr.io/zenllc/java:21 for java 21 or ghcr.io/zenllc/java:17 for java 17!
 
 [api.client.eggs.purpur]
-display = "Minecraft - Purpur"
+display = "Purpur"
+type = "MC Java"
+icon = "https://purpurmc.org/images/purpur-pride.svg"
 
   [api.client.eggs.purpur.minimum]
   ram = 1_024
@@ -150,15 +155,15 @@ display = "Minecraft - Purpur"
     enabled = true
 
       [api.client.coins.store.ram]
-      cost = 300
+      cost = 250
       per = 1_024
 
       [api.client.coins.store.disk]
-      cost = 200
+      cost = 150
       per = 5_120
 
       [api.client.coins.store.cpu]
-      cost = 350
+      cost = 300
       per = 100
 
       [api.client.coins.store.servers]

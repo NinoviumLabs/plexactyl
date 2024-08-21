@@ -1,6 +1,6 @@
 <hr>
 
-# Plexactyl
+# Plexactyl • The next generation of dashboards for Pterodactyl
 
 All features:
 - Resource Management (Use it to create servers, etc)
