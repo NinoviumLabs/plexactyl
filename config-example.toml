@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.1.0"
+version = "18.1.1"
 
 # Additional settings
 testing = false
