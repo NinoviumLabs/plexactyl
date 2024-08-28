@@ -58,7 +58,7 @@ module.exports.load = async function(app, db) {
             });
             if (!cacheaccount) {
                 return res.send(
-                    "Heliactyl failed to find an account on the configured panel, try relogging"
+                    "Failed to find an account on the configured panel, try relogging"
                 );
             }
             req.session.pterodactyl = cacheaccount.attributes;

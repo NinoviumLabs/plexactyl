@@ -91,7 +91,7 @@ How to add more eggs:
 
 ⚠️ database.sqlite compatibility with Dashactyl 0.4 or Plexactyl/Heliactyl 12 has not been tested.
 
-From Heliactyl or Dashactyl v0.4 to Plexactyl:
+From Heliactyl 14/18 to Plexactyl:
 1. Store certain information such as your api keys, discord auth settings, etc in a .txt file or somewhere safe
 2. Download database.sqlite (This is the Database which includes important data about the user and servers)
 3. Delete all files in the directory of the server (or delete and remake the folder if done in ssh)
@@ -125,4 +125,4 @@ To stop a currently running Plexactyl instance, use `pm2 stop Plexactyl`
 # Legacy Deprecation Notice
 
 Heliactyl has now reached EOL (End Of Life) and should not be used in Production.
-Please update to Plexactyl or [Fixed Heliactyl](https://github.com/OvernodeProjets/Fixed-Heliactyl)
+Please update to Plexactyl.

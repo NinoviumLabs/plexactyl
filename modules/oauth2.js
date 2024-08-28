@@ -25,10 +25,10 @@ const { renderFile } = require("ejs");
 const vpnCheck = require("../handlers/vpnCheck");
 
 /* Ensure platform release target is met */
-const heliactylModule = { "name": "Discord OAuth2", "target_platform": "18.1.x" };
+const plexactylModule = { "name": "Discord OAuth2", "target_platform": "18.1.x" };
 
 /* Module */
-module.exports.heliactylModule = heliactylModule;
+module.exports.plexactylModule = plexactylModule;
 module.exports.load = async function (app, db) {
   app.get("/cp/login", async (req, res) => {
     if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
