@@ -4,7 +4,7 @@ timezone = "Europe/London"
 icon = "https://avatars.githubusercontent.com/u/176057729"
 
 # Plexactyl release information
-version = "18.1.1"
+version = "18.1.2"
 
 # Additional settings
 testing = false
@@ -19,6 +19,9 @@ key = "PTERO_KEY"
 # Webserver
 [website]
 port = 3_000
+
+[servers]
+allocations = 5 # 5 is recommended 
 
 # Module settings (formerly API)
 [api.client]

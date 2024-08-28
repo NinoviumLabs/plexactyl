@@ -28,10 +28,6 @@ module.exports.load = async function (app, db) {
     if (isNaN(parsedAmount) || parsedAmount < 1 || parsedAmount > 10)
       return res.send("Amount must be a number between 1 and 10");
 
-    const theme = indexjs.get(req);
-    const failedCallbackPath =
-      theme.settings.redirect[`failedpurchase${type}`] || "/";
-
     const userCoins = (await db.get(`coins-${req.session.userinfo.id}`)) || 0;
     const resourceCap =
       (await db.get(`${type}-${req.session.userinfo.id}`)) || 0;
@@ -40,7 +36,7 @@ module.exports.load = async function (app, db) {
     const purchaseCost = cost * parsedAmount;
 
     if (userCoins < purchaseCost)
-      return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
+      return res.redirect(`/cp/store?err=CANNOTAFFORD`);
 
     const newUserCoins = userCoins - purchaseCost;
     const newResourceCap = resourceCap + parsedAmount;
@@ -76,11 +72,7 @@ module.exports.load = async function (app, db) {
       `${req.session.userinfo.username} bought ${extraResource} ${type} from the store for \`${purchaseCost}\` coins.`
     );
 
-    res.redirect(
-      (theme.settings.redirect[`purchase${type}`]
-        ? theme.settings.redirect[`purchase${type}`]
-        : "/") + "?err=none"
-    );
+    res.redirect("/cp/store?err=none");
   });
 
   async function enabledCheck(req, res) {

@@ -63,9 +63,6 @@ module.exports.load = async function (app, db) {
     if (isNaN(coins))
       return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
 
-    if (coins < 0 || coins > 999999999999999)
-      return res.redirect(`${failredirect}?err=COINSIZE`);
-
     if (coins == 0) {
       await db.delete("coins-" + id);
     } else {
@@ -123,9 +120,6 @@ module.exports.load = async function (app, db) {
 
     if (isNaN(coins))
       return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
-
-    if (coins < 0 || coins > 999999999999999)
-      return res.redirect(`${failredirect}?err=COINSIZE`);
 
     if (coins == 0) {
       await db.delete("coins-" + id);
@@ -199,33 +193,21 @@ module.exports.load = async function (app, db) {
 
       if (ramstring) {
         let ram = parseFloat(ramstring);
-        if (ram < 0 || ram > 999999999999999) {
-          return res.redirect(`${failredirect}?err=RAMSIZE`);
-        }
         extra.ram = ram;
       }
 
       if (diskstring) {
         let disk = parseFloat(diskstring);
-        if (disk < 0 || disk > 999999999999999) {
-          return res.redirect(`${failredirect}?err=DISKSIZE`);
-        }
         extra.disk = disk;
       }
 
       if (cpustring) {
         let cpu = parseFloat(cpustring);
-        if (cpu < 0 || cpu > 999999999999999) {
-          return res.redirect(`${failredirect}?err=CPUSIZE`);
-        }
         extra.cpu = cpu;
       }
 
       if (serversstring) {
         let servers = parseFloat(serversstring);
-        if (servers < 0 || servers > 999999999999999) {
-          return res.redirect(`${failredirect}?err=SERVERSIZE`);
-        }
         extra.servers = servers;
       }
 
@@ -313,33 +295,21 @@ module.exports.load = async function (app, db) {
 
       if (ramstring) {
         let ram = parseFloat(ramstring);
-        if (ram < 0 || ram > 999999999999999) {
-          return res.redirect(`${failredirect}?err=RAMSIZE`);
-        }
         extra.ram = extra.ram + ram;
       }
 
       if (diskstring) {
         let disk = parseFloat(diskstring);
-        if (disk < 0 || disk > 999999999999999) {
-          return res.redirect(`${failredirect}?err=DISKSIZE`);
-        }
         extra.disk = extra.disk + disk;
       }
 
       if (cpustring) {
         let cpu = parseFloat(cpustring);
-        if (cpu < 0 || cpu > 999999999999999) {
-          return res.redirect(`${failredirect}?err=CPUSIZE`);
-        }
         extra.cpu = extra.cpu + cpu;
       }
 
       if (serversstring) {
         let servers = parseFloat(serversstring);
-        if (servers < 0 || servers > 999999999999999) {
-          return res.redirect(`${failredirect}?err=SERVERSIZE`);
-        }
         extra.servers = extra.servers + servers;
       }
 

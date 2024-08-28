@@ -1,6 +1,6 @@
 {
   "name": "plexactyl",
-  "version": "18.1.1",
+  "version": "18.1.2",
   "description": "The next generation of dashboards for Pterodactyl.",
   "main": "app.js",
   "author": "Zen Software",

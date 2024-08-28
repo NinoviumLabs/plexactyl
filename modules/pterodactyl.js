@@ -234,6 +234,7 @@ module.exports.load = async function(app, db) {
                     specs.limits.memory = ram;
                     specs.limits.disk = disk;
                     specs.limits.cpu = cpu;
+                    specs.feature_limits.allocations = settings.servers.allocations;
                     if (!specs["deploy"])
                         specs.deploy = {
                             locations: [],
