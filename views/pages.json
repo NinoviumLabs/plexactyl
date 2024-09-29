@@ -2,11 +2,11 @@
     "index": "auth.ejs",
     "notfound": "errors/404.ejs",
     "redirect": {
-        "callback": "/cp/dashboard",
+        "callback": "/cp",
         "failedcallback": "/",
         "logout": "/",
-        "deleteserver": "/cp/dashboard",
-        "createserver": "/cp/dashboard",
+        "deleteserver": "/cp",
+        "createserver": "/cp",
         "failedcreateserver": "/cp/servers/new",
         "modifyserver": "/cp/servers/edit",
         "failedmodifyserver": "/cp/servers/edit",
@@ -14,9 +14,9 @@
         "failedsetplan": "/cp/admin",
         "getip": "/cp/admin",
         "failedgetip": "/cp/admin",
-        "createserverdisabled": "/cp/dashboard?err=disabled",
-        "modifyserverdisabled": "/cp/dashboard?err=disabled",
-        "deleteserverdisabled": "/cp/dashboard?err=disabled",
+        "createserverdisabled": "/cp?err=disabled",
+        "modifyserverdisabled": "/cp?err=disabled",
+        "deleteserverdisabled": "/cp?err=disabled",
         "setresources": "/cp/admin",
         "failedsetresources": "/cp/admin",
         "setcoins": "/cp/admin",
@@ -29,7 +29,7 @@
         "removeaccountsuccess": "/cp/admin"
     },
     "pages": {
-        "cp/dashboard": "general/dashboard.ejs",
+        "cp": "general/dashboard.ejs",
         "cp/servers/new": "servers/create.ejs",
         "cp/servers/edit": "servers/edit.ejs",
         "cp/admin": "admin/index.ejs",
@@ -39,7 +39,7 @@
         "cp/account": "general/profile.ejs"
     },
     "mustbeloggedin": [
-        "/cp/dashboard",
+        "/cp",
         "/cp/servers/new",
         "/cp/servers/edit",
         "/cp/admin",

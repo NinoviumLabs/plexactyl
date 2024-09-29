@@ -1,5 +1,10 @@
 <html class="h-full bg-bluey-800">
 <%- include('./components/head') %>
+<% if (userinfo) { %>
+  <script>
+  window.location.href = "./cp"
+  </script>
+<% } %>  
 <body style="font-family: 'Whitney', sans-serif;" class="bg-bluey-800 h-full">
 <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="w-full max-w-md space-y-8">

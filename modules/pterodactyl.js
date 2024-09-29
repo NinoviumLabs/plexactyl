@@ -37,7 +37,7 @@ module.exports.load = async function(app, db) {
         if (req.query.redirect)
             if (typeof req.query.redirect == "string")
                 return res.redirect("/" + req.query.redirect);
-        res.redirect("/cp/dashboard");
+        res.redirect("/cp");
     });
 
     app.get("/cp/create", async (req, res) => {
@@ -280,7 +280,7 @@ module.exports.load = async function(app, db) {
                             "queued server creation",
                             `${req.session.userinfo.username} queued a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\nQueue Position: ${queuePosition}\`\`\``
                         );
-                        return res.redirect("/cp/dashboard?err=QUEUED");
+                        return res.redirect("/cp?err=QUEUED");
                     }
                     let serverinfotext = await serverinfo.json();
                     let newpterodactylinfo = req.session.pterodactyl;
@@ -291,7 +291,7 @@ module.exports.load = async function(app, db) {
                         "created server",
                         `${req.session.userinfo.username} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
                     );
-                    return res.redirect("/cp/dashboard?err=CREATED");
+                    return res.redirect("/cp?err=CREATED");
                 } else {
                     res.redirect(`${redirectlink}?err=NOTANUMBER`);
                 }
@@ -408,7 +408,7 @@ module.exports.load = async function(app, db) {
             );
         }
     
-        res.redirect('../dashboard');
+        res.redirect('..');
     });
 
     // Route to clear the entire queue
@@ -629,7 +629,7 @@ app.get("/cp/clear-queue", async (req, res) => {
               pterorelationshipsserverdata;
             let theme = indexjs.get(req);
             adminjs.suspend(req.session.userinfo.id);
-            res.redirect("/cp/dashboard?err=MODIFIED");
+            res.redirect("/cp?err=MODIFIED");
           } else {
             res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
           }
@@ -684,7 +684,7 @@ app.get("/cp/clear-queue", async (req, res) => {
     
           adminjs.suspend(req.session.userinfo.id);
     
-          return res.redirect("/cp/dashboard?err=DELETED");
+          return res.redirect("/cp?err=DELETED");
         } else {
           res.redirect(
             theme.settings.redirect.deleteserverdisabled

@@ -1,7 +1,7 @@
 # Name and timezone
 name = "Plexactyl"
 timezone = "Europe/London"
-icon = "https://avatars.githubusercontent.com/u/176057729"
+icon = "https://iili.io/dZSv0JI.png"
 
 # Plexactyl release information
 version = "18.1.2"
@@ -21,7 +21,8 @@ key = "PTERO_KEY"
 port = 3_000
 
 [servers]
-allocations = 5 # 5 is recommended 
+allocations = 5 # 5 is recommended
+# This is the amount of ports people can make (1 = no extra ports as that slot will be used by main port)
 
 # Module settings (formerly API)
 [api.client]

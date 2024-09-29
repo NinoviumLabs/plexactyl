@@ -894,29 +894,6 @@ module.exports.load = async function (app, db) {
           }
         );
       }
-    } else {
-      if (settings.api.client.allow.renewsuspendsystem.enabled == true) return;
-      for (
-        let i = 0, len = userinfo.attributes.relationships.servers.data.length;
-        i < len;
-        i++
-      ) {
-        let suspendid =
-          userinfo.attributes.relationships.servers.data[i].attributes.id;
-        await fetch(
-          settings.pterodactyl.domain +
-            "/api/application/servers/" +
-            suspendid +
-            "/unsuspend",
-          {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${settings.pterodactyl.key}`,
-            },
-          }
-        );
-      }
     }
   };
 };
